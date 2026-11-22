@@ -1,0 +1,3087 @@
+{
+  "schema_version": 1,
+  "source": "WFP VAM food prices (HDX), local snapshot",
+  "generated_at": "2026-11-22T05:46:25+00:00",
+  "data_through": "2026-10",
+  "n_entries": 342,
+  "prices": [
+    {
+      "market": "Adele Center",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Alinjugur",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 87.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Amaya",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Archers Post",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Ashabito",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 140.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Bangale",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Bangladesh (Mombasa)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Bangladesh (Mombasa)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 55.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Bangladesh (Mombasa)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Bangladesh (Mombasa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 86.67,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Banissa",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-12-15"
+    },
+    {
+      "market": "Baragoi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Baraki",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Benane",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Biliqo",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Boka",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Bulesa Bulesa",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 53.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-09-15"
+    },
+    {
+      "market": "Buna",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 90.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Bura",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 75.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Bute",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-12-15"
+    },
+    {
+      "market": "Charidende",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Chemolingot",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 110.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Dadaab town",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-04-15"
+    },
+    {
+      "market": "Dadaab town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Dadaab town",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-04-15"
+    },
+    {
+      "market": "Dagahaley (Daadab)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Dagahaley (Daadab)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Dagahaley (Daadab)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 900.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Dagahaley (Daadab)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 67.85,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Damajale",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 240.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Dambala Fachana",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Dandora (Nairobi)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Dandora (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 31.87,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Dandora (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 5.3,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Dandora (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 56.43,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Dertu",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Dirib",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Dub Goba",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 57.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "El Wak",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Eldas",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Eldoret town (Uasin Gishu)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 4410.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Eldoret town (Uasin Gishu)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1958.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Eldoret town (Uasin Gishu)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1092.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Eldoret town (Uasin Gishu)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 3561.5,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Eldoret town (Uasin Gishu)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 5248.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Eliye Centre",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 67.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Emali",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 76.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Ethiopia (Kakuma)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Ethiopia (Kakuma)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Ethiopia (Kakuma)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 78.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Ethiopia (Kakuma)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 90.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Garbatulla",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 88.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Garissa",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Garissa town (Garissa)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-02-15"
+    },
+    {
+      "market": "Garissa town (Garissa)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2520.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-10-15"
+    },
+    {
+      "market": "Garissa town (Garissa)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 2150.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-10-15"
+    },
+    {
+      "market": "Garissa town (Garissa)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1560.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-10-15"
+    },
+    {
+      "market": "Garissa town (Garissa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 57.5,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-02-15"
+    },
+    {
+      "market": "Garissa town (Garissa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 1900.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-10-15"
+    },
+    {
+      "market": "Garissa town (Garissa)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 3220.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-10-15"
+    },
+    {
+      "market": "Garsen",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 98.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Griftu",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Habaswein",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 90.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Hadado",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Hagadera (Daadab)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-10-15"
+    },
+    {
+      "market": "Hagadera (Daadab)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 110.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Hagadera (Daadab)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Hagadera (Daadab)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-10-15"
+    },
+    {
+      "market": "Hola town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 75.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "HongKong (Kakuma)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "HongKong (Kakuma)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "HongKong (Kakuma)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "IFO (Daadab)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-10-15"
+    },
+    {
+      "market": "IFO (Daadab)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 55.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "IFO (Daadab)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 71.22,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Illbissil Food Market (Kajiado)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2730.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Illbissil Food Market (Kajiado)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1000.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Illbissil Food Market (Kajiado)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 975.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Illbissil Food Market (Kajiado)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 3215.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Illbissil Food Market (Kajiado)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 1920.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Iresaboru Centre",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 360.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Isiolo town",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 7.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Isiolo town",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 42.5,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Isiolo town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Isiolo town",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 85.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Jarajara",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Junda (Mombasa)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Junda (Mombasa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 45.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kaanwa (Tharaka Nithi)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 7560.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2024-02-15"
+    },
+    {
+      "market": "Kaanwa (Tharaka Nithi)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1000.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-05-15"
+    },
+    {
+      "market": "Kaanwa (Tharaka Nithi)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1170.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-05-15"
+    },
+    {
+      "market": "Kaanwa (Tharaka Nithi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 4500.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-05-15"
+    },
+    {
+      "market": "Kaanwa (Tharaka Nithi)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 2560.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2024-02-15"
+    },
+    {
+      "market": "Kaeris",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Kakuma 2",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kakuma 2",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kakuma 2",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Kakuma 2",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 97.78,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kakuma 3",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kakuma 3",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 73.33,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kakuma 3",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 87.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Kakuma 3",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 91.67,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kakuma 4",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kakuma 4",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 65.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kakuma 4",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 110.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Kakuma 4",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 101.3,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kakuma town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-12-15"
+    },
+    {
+      "market": "Kalahari (Mombasa)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kalahari (Mombasa)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Kalahari (Mombasa)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Kalahari (Mombasa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kalemgorok",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Kaleng",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-09-15"
+    },
+    {
+      "market": "Kalobeyei (Village 1)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kalobeyei (Village 1)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kalobeyei (Village 1)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 90.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Kalobeyei (Village 1)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kalobeyei (Village 2)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-10-15"
+    },
+    {
+      "market": "Kalobeyei (Village 2)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kalobeyei (Village 2)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 115.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Kalobeyei (Village 2)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-10-15"
+    },
+    {
+      "market": "Kalobeyei (Village 3)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kalobeyei (Village 3)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Kalobeyei (Village 3)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Kalobeyei (Village 3)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-08-15"
+    },
+    {
+      "market": "Kalobeyei town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-09-15"
+    },
+    {
+      "market": "Kalokol",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Kang'akipur",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 5.71,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 27.46,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2520.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2025-08-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 5.12,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1500.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2025-08-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 845.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 2500.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Kangemi (Nairobi)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 2880.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2026-07-15"
+    },
+    {
+      "market": "Karare",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Karatina (Nyeri)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 1890.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Karatina (Nyeri)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 750.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2024-04-15"
+    },
+    {
+      "market": "Karatina (Nyeri)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1560.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2024-05-15"
+    },
+    {
+      "market": "Karatina (Nyeri)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 2750.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2024-04-15"
+    },
+    {
+      "market": "Karatina (Nyeri)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 4480.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Kargi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-12-15"
+    },
+    {
+      "market": "Kargi South Horr",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 73.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Kasuroi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Kataboi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Kathonzweni (Makueni)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2835.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2026-05-15"
+    },
+    {
+      "market": "Kathonzweni (Makueni)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1750.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2026-05-15"
+    },
+    {
+      "market": "Kathonzweni (Makueni)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1560.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2026-05-15"
+    },
+    {
+      "market": "Kathonzweni (Makueni)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 3000.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2026-05-15"
+    },
+    {
+      "market": "Kathonzweni (Makueni)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 5120.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2026-05-15"
+    },
+    {
+      "market": "Katilia",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-12-15"
+    },
+    {
+      "market": "Kawangware (Nairobi)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 7.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Kawangware (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 30.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kawangware (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kawangware (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 68.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Kibish",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-09-15"
+    },
+    {
+      "market": "Kibra (Nairobi)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Kibra (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 31.22,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kibra (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Kibra (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 59.38,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Kibuye (Kisumu)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 6300.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Kibuye (Kisumu)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 4482.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Kibuye (Kisumu)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1600.04,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2026-05-15"
+    },
+    {
+      "market": "Kibuye (Kisumu)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 6700.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Kibuye (Kisumu)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 7619.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2026-09-15"
+    },
+    {
+      "market": "Kibwezi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Kiliwaheri",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 117.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Kimalel Center",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Kipini",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 87.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Kipsing CENTER",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Kisima",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Kisumu",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 2400.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2019-10-15"
+    },
+    {
+      "market": "Kisumu Ndogo (Mombasa)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kisumu Ndogo (Mombasa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 45.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kitengela (Kajiado)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 1027.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kitengela (Kajiado)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1333.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kitengela (Kajiado)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1560.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kitengela (Kajiado)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 1930.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kitengela (Kajiado)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 3008.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kitui",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 3500.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2020-03-15"
+    },
+    {
+      "market": "Kitui town (Kitui)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2154.6,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kitui town (Kitui)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1500.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kitui town (Kitui)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 845.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kitui town (Kitui)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 910.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kitui town (Kitui)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 1996.8,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Kiwanja",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Kongowea (Mombasa)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 1743.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kongowea (Mombasa)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 635.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kongowea (Mombasa)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1679.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kongowea (Mombasa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 1703.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Kongowea (Mombasa)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 2374.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Korr",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-09-15"
+    },
+    {
+      "market": "Kotile",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 105.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Lagbogol",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 97.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-09-15"
+    },
+    {
+      "market": "Laisamis Town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Lengusaka",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Liboi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 160.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Loboi Center",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Lodungokwe",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 140.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Lodwar town",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 17.5,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Lodwar town",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Lodwar town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Lodwar town",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Loglogo",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Lokichar (Turkana)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Lokichoggio",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-12-15"
+    },
+    {
+      "market": "Lokitaung",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 140.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Lokori",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-09-15"
+    },
+    {
+      "market": "Lolkuniyani",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 73.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Lolkunono",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 88.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Lolupe",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Lomut (West Pokot)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2872.8,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-04-15"
+    },
+    {
+      "market": "Lomut (West Pokot)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 2833.33,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-04-15"
+    },
+    {
+      "market": "Lomut (West Pokot)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 650.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2021-10-15"
+    },
+    {
+      "market": "Lomut (West Pokot)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 4116.67,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-04-15"
+    },
+    {
+      "market": "Lomut (West Pokot)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 3485.87,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-04-15"
+    },
+    {
+      "market": "Loosuk",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 55.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Lopur",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Lororo Centre",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 40.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-03-15"
+    },
+    {
+      "market": "Lorugum",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Loturerei",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Lowarengak",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Loyangalani",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Maalamin",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Makere",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Makueni",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 1890.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2021-05-15"
+    },
+    {
+      "market": "Makueni",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 728.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2021-05-15"
+    },
+    {
+      "market": "Makueni",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 2560.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2021-05-15"
+    },
+    {
+      "market": "Makutano (West Pokot)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 1980.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Makutano (West Pokot)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1131.5,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Makutano (West Pokot)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1300.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Makutano (West Pokot)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 1225.5,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Makutano (West Pokot)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 3013.5,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Malka GALLA",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 140.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Malkadaka",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 75.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Mandera",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-12-15"
+    },
+    {
+      "market": "Mandera town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 140.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Maralal",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 55.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Marigat town (Baringo)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-08-15"
+    },
+    {
+      "market": "Marigat town (Baringo)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2520.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Marigat town (Baringo)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1750.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Marigat town (Baringo)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 780.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Marigat town (Baringo)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-02-15"
+    },
+    {
+      "market": "Marigat town (Baringo)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 2500.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Marigat town (Baringo)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 3200.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-07-15"
+    },
+    {
+      "market": "Marsabit",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Marsabit town",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-03-15"
+    },
+    {
+      "market": "Marsabit town",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-03-15"
+    },
+    {
+      "market": "Masalani",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 68.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Mathare (Nairobi)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Mathare (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 32.22,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Mathare (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Mathare (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 45.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Merille Town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Merti CENTER",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-12-15"
+    },
+    {
+      "market": "Minjila",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 88.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Modogashe",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 78.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Mogadishu (Kakuma)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 20.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2026-10-15"
+    },
+    {
+      "market": "Mogadishu (Kakuma)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 83.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Mogadishu (Kakuma)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-10-15"
+    },
+    {
+      "market": "Mombasa",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 1718.88,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2012-03-15"
+    },
+    {
+      "market": "Moroto (Mombasa)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Moroto (Mombasa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Morulem",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 90.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Moyale town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 103.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Mtito Andei",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 63.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Mukuru (Nairobi)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Mukuru (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 30.83,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Mukuru (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 5.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Mukuru (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 35.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-01-15"
+    },
+    {
+      "market": "Naakalei",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Nachola",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-09-15"
+    },
+    {
+      "market": "Naduat",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-12-15"
+    },
+    {
+      "market": "Nairobi",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 8.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2020-08-15"
+    },
+    {
+      "market": "Nairobi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 6.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2020-08-15"
+    },
+    {
+      "market": "Nairobi",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 61.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2020-08-15"
+    },
+    {
+      "market": "Nairobi",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 2733.33,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2020-03-15"
+    },
+    {
+      "market": "Nairobi",
+      "commodity": "Tomatoes",
+      "pricetype": "Retail",
+      "price": 58.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2020-08-15"
+    },
+    {
+      "market": "Nakukulas",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 90.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Nakuru",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 2625.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2020-03-15"
+    },
+    {
+      "market": "Namoruputh",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Nanigi",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Ngaremara",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Ngilai",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 140.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Nginyang",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 150.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Ngurunit",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 57.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-12-15"
+    },
+    {
+      "market": "Oldonyiro",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 68.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Porro",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Rhamu",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 135.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Saka Town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Saretho",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 65.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Sericho Center",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 75.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Shanta Abak",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Shauri Yako",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Shonda (Mombasa)",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Shonda (Mombasa)",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 55.0,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Shonda (Mombasa)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 10.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Shonda (Mombasa)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 80.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2021-11-15"
+    },
+    {
+      "market": "Sololo",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-03-15"
+    },
+    {
+      "market": "Songa",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 53.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-03-15"
+    },
+    {
+      "market": "Suguta",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 60.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2024-12-15"
+    },
+    {
+      "market": "Takaba (Mandera)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 7560.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Takaba (Mandera)",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 120.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-12-15"
+    },
+    {
+      "market": "Takaba (Mandera)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 5000.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Takaba (Mandera)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1005.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Takaba (Mandera)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 4625.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Takaba (Mandera)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 7859.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2023-06-15"
+    },
+    {
+      "market": "Tala Centre Market (Machakos)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 3125.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2022-12-15"
+    },
+    {
+      "market": "Tala Centre Market (Machakos)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1500.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2022-12-15"
+    },
+    {
+      "market": "Tala Centre Market (Machakos)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 520.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2022-12-15"
+    },
+    {
+      "market": "Tala Centre Market (Machakos)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 2631.5,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2022-12-15"
+    },
+    {
+      "market": "Tala Centre Market (Machakos)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 3667.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2022-12-15"
+    },
+    {
+      "market": "Tarasaa",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 83.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Tarbaj",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-12-15"
+    },
+    {
+      "market": "Turkwel Centre",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2023-12-15"
+    },
+    {
+      "market": "Vanga (Kwale)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 6300.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Vanga (Kwale)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1000.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Vanga (Kwale)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 520.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Vanga (Kwale)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 1225.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2021-01-15"
+    },
+    {
+      "market": "Vanga (Kwale)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 3200.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2024-01-15"
+    },
+    {
+      "market": "Wajir town",
+      "commodity": "Bananas",
+      "pricetype": "Retail",
+      "price": 15.0,
+      "unit": "Unit",
+      "currency": "KES",
+      "date": "2022-02-15"
+    },
+    {
+      "market": "Wajir town",
+      "commodity": "Cabbage",
+      "pricetype": "Retail",
+      "price": 130.83,
+      "unit": "Head",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Wajir town",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "Bunch",
+      "currency": "KES",
+      "date": "2021-02-15"
+    },
+    {
+      "market": "Wajir town",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Retail",
+      "price": 100.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2022-02-15"
+    },
+    {
+      "market": "Wakulima (Nairobi)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 2835.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Wakulima (Nairobi)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 1650.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Wakulima (Nairobi)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 1170.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Wakulima (Nairobi)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 1902.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Wakulima (Nairobi)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 4874.88,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2025-06-15"
+    },
+    {
+      "market": "Wakulima (Nakuru)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 3330.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Wakulima (Nakuru)",
+      "commodity": "Kale",
+      "pricetype": "Wholesale",
+      "price": 859.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Wakulima (Nakuru)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 2326.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2024-04-15"
+    },
+    {
+      "market": "Wakulima (Nakuru)",
+      "commodity": "Potatoes (Irish)",
+      "pricetype": "Wholesale",
+      "price": 5384.0,
+      "unit": "50 KG",
+      "currency": "KES",
+      "date": "2024-04-15"
+    },
+    {
+      "market": "Wakulima (Nakuru)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 6400.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2024-06-15"
+    },
+    {
+      "market": "Waldena",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Wamba",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 50.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2026-06-15"
+    },
+    {
+      "market": "Wayu",
+      "commodity": "Kale",
+      "pricetype": "Retail",
+      "price": 70.0,
+      "unit": "KG",
+      "currency": "KES",
+      "date": "2025-03-15"
+    },
+    {
+      "market": "Wote town (Makueni)",
+      "commodity": "Cabbage",
+      "pricetype": "Wholesale",
+      "price": 1890.0,
+      "unit": "126 KG",
+      "currency": "KES",
+      "date": "2021-05-15"
+    },
+    {
+      "market": "Wote town (Makueni)",
+      "commodity": "Onions (dry)",
+      "pricetype": "Wholesale",
+      "price": 728.0,
+      "unit": "13 KG",
+      "currency": "KES",
+      "date": "2021-05-15"
+    },
+    {
+      "market": "Wote town (Makueni)",
+      "commodity": "Tomatoes",
+      "pricetype": "Wholesale",
+      "price": 2560.0,
+      "unit": "64 KG",
+      "currency": "KES",
+      "date": "2021-05-15"
+    }
+  ]
+}

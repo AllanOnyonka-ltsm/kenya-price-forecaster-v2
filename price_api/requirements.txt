@@ -1,11 +1,14 @@
-fastapi>=0.100.0
-uvicorn[standard]>=0.23.0
-gunicorn>=21.0.0
-joblib>=1.3.0
-numpy>=1.24.0
-pandas>=2.0.0
-scikit-learn>=1.3.0
-pydantic>=2.0.0
-shap
-python-dotenv>=1.0.0
-httpx>=0.24.0
+# Pinned to the versions the test suites pass with (Python 3.12, checked 2026-11-22).
+# The pickled legacy RandomForest in artifacts/ is loaded with scikit-learn, so keep
+# scikit-learn/joblib/numpy in step with pipeline/requirements.txt.
+fastapi==0.165.0
+uvicorn[standard]==0.54.0
+gunicorn==27.0.1
+joblib==1.6.0
+numpy==2.5.5
+pandas==3.1.1
+scikit-learn==1.9.1
+pydantic==2.14.4
+shap==0.54.1
+python-dotenv==1.2.4
+httpx==0.28.1

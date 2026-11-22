@@ -1,340 +1,49 @@
-# API Test Validation Report
+# Test Validation Report
 
-**Date:** 2025-12-05  
-**Status:** ✅ ALL TESTS PASSING
+**Last re-run:** 2026-11-22 (counts below were re-run for this document; see the commands in section 1).
+**Earlier report:** the 2025-12-05 "12 of 12 passing" report is withdrawn. See section 4.
 
-## Test Summary
+## 1. Current automated tests
 
-- **Total Tests:** 12
-- **Passed:** 12 (100%)
-- **Failed:** 0
-- **Test Coverage:** All 6 new endpoints + original /predict endpoint + error handling
+| Suite | Where | Command (run from) | Result on 2026-11-22 |
+|---|---|---|---|
+| API unit tests | `price_api/test_*_unit.py` (7 modules) | `price_api`: `python -m unittest discover -s . -t . -p "test_*_unit.py"` | 140 tests, OK |
+| Pipeline unit tests | `pipeline/test_pipeline_unit.py`, `pipeline/test_latest_prices_unit.py` | repo root: `python -m unittest discover -s pipeline -t pipeline` | 51 tests, OK (1 skipped unless `PRICE_API_APP` is set) |
 
-## Test Results
+Breakdown of the API unit tests by module: `test_predictor_unit` 59, `test_geo_unit` 19, `test_intent_router_unit` 19, `test_latest_prices_unit` 18, `test_feedback_store_unit` 9, `test_feature_importance_unit` 9, `test_coord_overrides_unit` 7. Pipeline: `test_pipeline_unit` 39, `test_latest_prices_unit` 12. Both suites also run in CI (`.github/workflows/tests.yml`) on every push and pull request.
 
-### 1. ✅ Root Endpoint (GET /)
-**Status:** 200 OK  
-**Response Structure Validated:**
-```json
-{
-  "message": "Kenyan Agro Market Price Prediction API",
-  "endpoints": { ... },
-  "example_request": { ... },
-  "supported_commodities": ["onion", "tomatoes", "potatoes", "kale", "cabbage"]
-}
-```
+Notes:
 
-### 2. ✅ Price Prediction (POST /predict)
-**Status:** 200 OK  
-**Input Schema Validated:**
-- date: string ✓
-- admin1: string ✓
-- market: string ✓
-- commodity: string ✓
-- pricetype: string ✓
-- previous_month_price: float ✓
+- The API unit suites import their modules directly (for example `predictor`, `geo`, `feedback_store`). They do not start the FastAPI server. The feedback tests use temporary directories, not `price_api/data/feedback.db`.
+- The pipeline suite uses synthetic data and makes no network calls (see [`pipeline/README.md`](pipeline/README.md)). Its one skipped test is a cross-check of the canonical commodity names against `price_api/app.py`. It runs only when the environment variable `PRICE_API_APP` points at `price_api/app.py`. With that variable set, all 32 tests pass.
+- Pipeline test runs use about 30 seconds on the machine used for this check.
 
-**Output Schema Validated:**
-- commodity: string ✓
-- market: string ✓
-- date: string ✓
-- prediction_per_kg: float ✓
-- unit: string ✓
-- market_type: string ✓
-- previous_month_price: float ✓
-- confidence_pct: float ✓
-- error_margin: string ✓
-- lower_bound: float ✓
-- upper_bound: float ✓
-- unreasonable: boolean ✓
-- note: string ✓
+## 2. Manual HTTP scripts (not part of the suites above)
 
-**Sample Response:**
-```json
-{
-  "commodity": "tomatoes",
-  "prediction_per_kg": 163.64,
-  "confidence_pct": 90.0,
-  "unreasonable": true
-}
-```
+These scripts send requests to a running server at `http://localhost:8000`. They were **not run** for this document, so no results are recorded here.
 
-### 3. ✅ Actionable Recommendations (POST /recommendations)
-**Status:** 200 OK  
-**Input Schema Validated:**
-- commodity: string ✓
-- market: string ✓
-- admin1: string ✓
-- predicted_price: float ✓
-- previous_price: float ✓
-- pricetype: string ✓
+- `price_api/test_endpoints.py`: HTTP checks of the endpoints. Needs a running server.
+- `price_api/test_gemini_recommendations.py`: checks `/recommendations` and `/webhook`. Needs a running server, and a `GEMINI_API_KEY` for the Gemini-backed paths. Without the key, the code falls back (see [`IMPLEMENTATION_SUMMARY.md`](IMPLEMENTATION_SUMMARY.md)).
 
-**Output Schema Validated:**
-- commodity: string ✓
-- market: string ✓
-- recommendations: List[string] ✓
-- action_type: string (enum: sell/hold/buy) ✓
-- confidence: string ✓
-- rationale: string ✓
+## 3. Not covered by the automated suites
 
-**Sample Response:**
-```json
-{
-  "action_type": "sell",
-  "confidence": "high",
-  "recommendations": [
-    "Predicted price increase of 20.0% - consider selling soon",
-    "Market conditions favor sellers",
-    "Retail prices are high - good time to market your produce"
-  ]
-}
-```
+- Live HTTP behaviour of each endpoint, including status codes and response bodies.
+- The real Gemini API responses (`/recommendations` message text and the `/webhook` LLM fallback).
+- Loading the real RandomForest file (`random_forest_price_model.pkl`) for `/explainability`. No unit test loads it.
+- Model accuracy. Accuracy is a separate question, covered by the backtest in [`RETRAINING_RESEARCH.md`](RETRAINING_RESEARCH.md), not by these tests.
 
-### 4. ✅ Micro-Market Forecasting (POST /micro-market)
-**Status:** 200 OK  
-**Input Schema Validated:**
-- commodity: string ✓
-- region: string ✓
-- radius_km: float (optional, default 50.0) ✓
-- date: string ✓
+## 4. Withdrawn: earlier report (2025-12-05)
 
-**Output Schema Validated:**
-- commodity: string ✓
-- region: string ✓
-- nearby_markets: List[Dict] ✓
-  - market_name: string ✓
-  - distance_km: float ✓
-  - estimated_price: float ✓
-  - market_type: string ✓
-- localized_forecast: Dict ✓
-  - average_price: float ✓
-  - min_price: float ✓
-  - max_price: float ✓
-  - price_variance: float ✓
-- recommended_market: string ✓
-- market_comparison: string ✓
+The earlier report claimed 12 of 12 checks passing, with sample responses and "fully validated" conclusions. It is withdrawn for these reasons:
 
-**Sample Response:**
-```json
-{
-  "nearby_markets": [
-    {
-      "market_name": "Nairobi Central Market",
-      "distance_km": 0.0,
-      "estimated_price": 57.6,
-      "market_type": "wholesale"
-    }
-  ],
-  "localized_forecast": {
-    "average_price": 62.93,
-    "min_price": 57.6,
-    "max_price": 70.4,
-    "price_variance": 12.8
-  }
-}
-```
+- It was written for the first version of the endpoints. Several of those endpoints have since changed (for example `/micro-market` no longer estimates prices, and `/explainability` now reports the RandomForest's importances).
+- Its `/impact-stats` sample contained hard-coded values (prediction and user counts, average accuracy, satisfaction, cost savings). Those values were never measured and have been removed from the API. They are not reproduced here.
+- Its "0 security vulnerabilities" and "deterministic behaviour" claims were not re-checked for the current code.
+- Its test runner, `test_endpoints.py`, is a manual script (section 2), not an automated suite.
 
-### 5. ✅ Format for Non-Tech Users (POST /format)
+## 5. Related documents
 
-#### 5a. SMS Format
-**Status:** 200 OK  
-**Output Schema Validated:**
-- format_type: "sms" ✓
-- formatted_message: string (76 chars) ✓
-- character_count: int ✓
-- estimated_cost: float (0.5 KES) ✓
-
-**Sample Output:**
-```
-cabbage @ Wakulima (Nairobi): KES 115.5/kg on 2025-12-05. Prev: KES 100.0/kg
-```
-
-#### 5b. WhatsApp Format
-**Status:** 200 OK  
-**Output Schema Validated:**
-- format_type: "whatsapp" ✓
-- formatted_message: string (244 chars with emojis) ✓
-- character_count: int ✓
-- estimated_cost: float (0.0) ✓
-
-**Sample Output:**
-```
-📊 *Market Price Forecast*
-
-🌾 Commodity: cabbage
-📍 Market: Wakulima (Nairobi)
-📅 Date: 2025-12-05
-
-💰 Predicted Price: *KES 115.5/kg*
-📉 Previous Price: KES 100.0/kg
-📊 Confidence: 90%
-
-Prediction within normal range.
-
-_Powered by Market Forecaster_
-```
-
-#### 5c. Bulletin Format
-**Status:** 200 OK  
-**Output Schema Validated:**
-- format_type: "bulletin" ✓
-- formatted_message: string (596 chars, formal format) ✓
-- character_count: int ✓
-- estimated_cost: null ✓
-
-### 6. ✅ Explainability/XAI (POST /explainability)
-**Status:** 200 OK  
-**Input Schema Validated:**
-- prediction_id: string (optional) ✓
-- commodity: string ✓
-- market: string ✓
-- predicted_price: float ✓
-- features: Dict ✓
-
-**Output Schema Validated:**
-- commodity: string ✓
-- market: string ✓
-- predicted_price: float ✓
-- top_influencing_factors: List[Dict] ✓
-  - factor: string ✓
-  - importance: float (0-1) ✓
-  - impact: string ✓
-  - description: string ✓
-- explanation_summary: string ✓
-- confidence_factors: Dict ✓
-
-**Sample Response:**
-```json
-{
-  "top_influencing_factors": [
-    {
-      "factor": "Previous Month Price",
-      "importance": 0.45,
-      "impact": "High",
-      "description": "Historical price of 58.2 KES/kg strongly influences forecast"
-    }
-  ],
-  "confidence_factors": {
-    "data_quality": "high",
-    "historical_accuracy": 0.85,
-    "sample_size": "adequate",
-    "market_volatility": "moderate",
-    "prediction_reliability": "good"
-  }
-}
-```
-
-### 7. ✅ User Feedback Collection (POST /feedback)
-**Status:** 200 OK  
-**Input Schema Validated:**
-- user_id: string (optional) ✓
-- prediction_id: string (optional) ✓
-- actual_price: float (optional) ✓
-- accuracy_rating: int 1-5 (optional) ✓
-- usefulness_rating: int 1-5 (optional) ✓
-- comments: string (optional) ✓
-- timestamp: string (optional) ✓
-
-**Output Schema Validated:**
-- feedback_id: string (UUID-based) ✓
-- status: string ✓
-- message: string ✓
-- timestamp: string (ISO 8601) ✓
-
-**Sample Response:**
-```json
-{
-  "feedback_id": "FB-dfe5336d",
-  "status": "success",
-  "message": "Thank you for your feedback!",
-  "timestamp": "2025-12-05T11:56:49.175102"
-}
-```
-
-### 8. ✅ Impact Statistics (GET /impact-stats)
-**Status:** 200 OK  
-**Output Schema Validated:**
-- total_predictions: int ✓
-- total_users: int ✓
-- average_accuracy: float ✓
-- total_markets_covered: int ✓
-- commodities_tracked: List[string] ✓
-- user_satisfaction: float ✓
-- cost_savings_estimate: float ✓
-- last_updated: string (ISO 8601) ✓
-
-**Sample Response:**
-```json
-{
-  "total_predictions": 15420,
-  "total_users": 3847,
-  "average_accuracy": 0.842,
-  "user_satisfaction": 4.3,
-  "cost_savings_estimate": 2847500.0
-}
-```
-
-### 9. ✅ Error Handling - Invalid Commodity
-**Status:** 400 Bad Request (Expected)  
-**Validation:** Proper error message returned ✓
-```json
-{
-  "detail": "Commodity 'banana' not supported. Allowed: ['onion', 'tomatoes', 'potatoes', 'kale', 'cabbage']"
-}
-```
-
-### 10. ✅ Error Handling - Zero Previous Price
-**Status:** 400 Bad Request (Expected)  
-**Validation:** Division by zero protection working ✓
-```json
-{
-  "detail": "previous_price must be greater than 0"
-}
-```
-
-## Input/Output Schema Validation Summary
-
-### Input Schemas
-All input schemas use Pydantic BaseModel with proper type validation:
-- ✅ Type checking (str, int, float, List, Dict)
-- ✅ Optional fields with defaults
-- ✅ Enum validation for specific fields
-- ✅ Range validation (e.g., ratings 1-5)
-- ✅ Division by zero protection
-
-### Output Schemas
-All output schemas are properly defined and validated:
-- ✅ Consistent response structures
-- ✅ Proper data types for all fields
-- ✅ Nested object validation
-- ✅ List and Dict type validation
-- ✅ ISO 8601 timestamps
-- ✅ UUID-based unique identifiers
-
-## Test Execution Details
-
-**Test Runner:** `test_endpoints.py` (232 lines)  
-**Test Method:** HTTP requests to running FastAPI server  
-**Server:** Uvicorn running on localhost:8000  
-**Environment:** Python 3.12.3 with FastAPI/Pydantic v2
-
-## Code Quality Verification
-
-- ✅ All endpoints follow consistent patterns
-- ✅ Proper error handling with HTTP status codes
-- ✅ Input validation at multiple levels
-- ✅ Type safety with Pydantic schemas
-- ✅ Deterministic behavior (no random values)
-- ✅ Clear, documented schemas
-- ✅ 0 CodeQL security vulnerabilities
-
-## Conclusion
-
-All 6 new API endpoints have been thoroughly tested with:
-1. **Input schema validation** - All required and optional fields tested
-2. **Output schema validation** - All response fields verified
-3. **Data type validation** - Proper types for all fields
-4. **Error handling** - Invalid inputs properly rejected
-5. **Business logic** - Recommendations, calculations, and formatting working correctly
-
-**Test Status: ✅ FULLY VALIDATED AND PASSING**
+- [`RETRAINING_RESEARCH.md`](RETRAINING_RESEARCH.md): backtest method and results, including the target-leakage finding.
+- [`pipeline/README.md`](pipeline/README.md): the monthly retraining pipeline and its exit codes.
+- [`IMPLEMENTATION_SUMMARY.md`](IMPLEMENTATION_SUMMARY.md): what each endpoint does now.
+- [`INTEGRATION_GUIDE.md`](INTEGRATION_GUIDE.md): integration notes for the webhook flow.

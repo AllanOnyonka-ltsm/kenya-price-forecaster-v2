@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            price_api/requirements.txt
+            pipeline/requirements.txt
+
+      # price_api/requirements.txt is a superset of pipeline/requirements.txt (same pins
+      # for pandas/numpy/scikit-learn/joblib). The pipeline tests also import price_api/app.py.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r price_api/requirements.txt -r pipeline/requirements.txt
+
+      # Runs every price_api/test_*_unit.py module. test_endpoints.py and
+      # test_gemini_recommendations.py are excluded: they need a live server or an API key.
+      - name: price_api unit tests
+        working-directory: price_api
+        env:
+          FEEDBACK_DB_PATH: ${{ runner.temp }}/feedback_test.db
+        run: python -W ignore -m unittest discover -v -s . -t . -p "test_*_unit.py"
+
+      - name: pipeline unit tests
+        env:
+          FEEDBACK_DB_PATH: ${{ runner.temp }}/feedback_test_pipeline.db
+          PRICE_API_APP: ${{ github.workspace }}/price_api/app.py
+        run: python -I -m unittest discover -v -s pipeline -t pipeline

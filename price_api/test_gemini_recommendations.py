@@ -1,6 +1,6 @@
 feat: Intelligent intent routing + Gemini-powered recommendations
 
-✅ READY FOR NODE.JS/TWILIO INTEGRATION
+READY FOR NODE.JS/TWILIO INTEGRATION
 
 New Features:
 - POST /webhook — Intent classification (GREETING/PRICE_QUERY/SELL_ORDER/BUY_ORDER/UNKNOWN)
@@ -63,7 +63,7 @@ def test_gemini_recommendations():
         print(f"\nStatus Code: {response.status_code}")
         
         if response.status_code in [200, 201]:
-            print("✅ SUCCESS\n")
+            print("SUCCESS\n")
             result = response.json()
             print(json.dumps(result, indent=2))
             
@@ -86,15 +86,15 @@ def test_gemini_recommendations():
             
             all_passed = True
             for desc, passed in checks:
-                status = "✅" if passed else "❌"
+                status = "" if passed else ""
                 print(f"{status} {desc}")
                 if not passed:
                     all_passed = False
             
             if all_passed:
-                print("\n✅ All checks passed! Gemini recommendations are working.")
+                print("\nAll checks passed! Gemini recommendations are working.")
             else:
-                print("\n❌ Some checks failed. See above.")
+                print("\nSome checks failed. See above.")
             
             # ─ Show farmer message ────────────────────────────────────────
             print("\n" + "="*70)
@@ -103,13 +103,13 @@ def test_gemini_recommendations():
             print(f"\n{result.get('farmer_message', 'N/A')}\n")
             
         else:
-            print("❌ FAILED")
+            print("FAILED")
             print(f"Response: {response.text}")
             
     except requests.exceptions.Timeout:
-        print("❌ ERROR: Request timed out (Gemini API may be slow or unavailable)")
+        print("ERROR: Request timed out (Gemini API may be slow or unavailable)")
     except Exception as e:
-        print(f"❌ ERROR: {str(e)}")
+        print(f"ERROR: {str(e)}")
 
 def test_webhook():
     """Test that /webhook returns structured intents."""
@@ -140,11 +140,11 @@ def test_webhook():
                 print(f"  Symbol: {result.get('symbol')}")
                 if result.get('sms'):
                     print(f"  SMS: {result.get('sms')[:80]}...")
-                print("  ✅")
+                print("  ")
             else:
-                print(f"  ❌ Status {response.status_code}: {response.text[:100]}")
+                print(f"  Status {response.status_code}: {response.text[:100]}")
         except Exception as e:
-            print(f"  ❌ Error: {str(e)}")
+            print(f"  Error: {str(e)}")
 
 if __name__ == "__main__":
     print("\n" + "="*70)

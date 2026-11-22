@@ -16,18 +16,98 @@ from enhanced_endpoints import (
     RecommendationResponse as EnhancedRecommendationResponse,
 )
 from intent_router import parse_intent, build_response
+from feature_importance import group_feature_importances, impact_label
+from geo import apply_coord_overrides, markets_within_radius
+from latest_prices import load_latest_prices
+import feedback_store
+from predictor import load_champion, Predictor, confidence_from_band
+import threading
+
+API_VERSION = "2.0.0"
+
 # =========================
-# LOAD ARTIFACTS
+# LOAD ARTIFACTS (lazy; a missing or corrupt file never crashes the import)
 # =========================
 MODEL_PATH      = "artifacts/random_forest_price_model.pkl"
 ENCODER_PATH    = "artifacts/label_encoders.pkl"
 FEATURES_PATH   = "artifacts/feature_columns.pkl"
 PREPROCESS_PATH = "artifacts/preprocessing_info.pkl"
+CHAMPION_PATH   = "artifacts/champion.json"
 
-model          = joblib.load(MODEL_PATH)
-label_encoders = joblib.load(ENCODER_PATH)
-feature_columns = joblib.load(FEATURES_PATH)
-preprocess_info = joblib.load(PREPROCESS_PATH)
+class _LazyArtifact:
+    """Loads on first use. A failure is stored in .problem and not retried."""
+    def __init__(self, loader):
+        self._loader = loader
+        self._lock   = threading.Lock()
+        self._done   = False
+        self.value   = None
+        self.problem = None
+
+    def get(self):
+        if not self._done:
+            with self._lock:
+                if not self._done:
+                    try:
+                        self.value = self._loader()
+                    except Exception as exc:
+                        self.problem = f"{type(exc).__name__}: {exc}"
+                    self._done = True
+        return self.value
+
+def _load_encoders() -> dict:
+    return {
+        "label_encoders":  joblib.load(ENCODER_PATH),
+        "feature_columns": joblib.load(FEATURES_PATH),
+        "preprocess_info": joblib.load(PREPROCESS_PATH),
+    }
+
+def _load_rf() -> dict:
+    enc = _ENCODERS.get()
+    if enc is None:
+        raise RuntimeError(f"encoders unavailable ({_ENCODERS.problem})")
+    model = joblib.load(MODEL_PATH)
+    # Grouped from the real model's importances; used only by /explainability.
+    factors = group_feature_importances(model.feature_importances_, enc["feature_columns"])
+    return {"model": model, "factor_importances": factors}
+
+_ENCODERS = _LazyArtifact(_load_encoders)
+_RF       = _LazyArtifact(_load_rf)
+
+def _encoders() -> dict:
+    enc = _ENCODERS.get()
+    if enc is None:
+        raise RuntimeError(f"label encoders unavailable ({_ENCODERS.problem})")
+    return enc
+
+def _factor_importances() -> list:
+    """Factor importances from the RF, or [] when the RF is not loaded."""
+    bundle = _RF.get()
+    return bundle["factor_importances"] if bundle is not None else []
+
+# Champion (naive_last by default). Never raises; problems are reported in /health.
+CHAMPION = load_champion(CHAMPION_PATH)
+
+# Latest WFP price per market/commodity/pricetype (for /micro-market). A missing or bad file
+# disables the feature (LATEST_PRICES is None); it never stops the API from starting.
+LATEST_PRICES_PATH = os.environ.get("LATEST_PRICES_PATH", "artifacts/latest_prices.json")
+LATEST_PRICES, LATEST_PRICES_PROBLEM = load_latest_prices(LATEST_PRICES_PATH)
+
+def _load_rf_predictor():
+    """Model loader for Predictor: returns f(features) -> RF mean forecast."""
+    bundle = _RF.get()
+    if bundle is None:
+        raise RuntimeError("random forest artifacts not loaded")
+    rf_model = bundle["model"]
+
+    def _predict(features: dict) -> float:
+        req = PredictRequest(**features)
+        X, _ = build_feature_vector(req)
+        mean, _, _, _ = rf_confidence(rf_model, X)
+        return float(mean)
+
+    return _predict
+
+PREDICTOR = Predictor(CHAMPION, model_loader=_load_rf_predictor)
 
 # =========================
 # BUSINESS RULES (LOCKED)
@@ -48,48 +128,59 @@ DEFAULT_MICRO_MARKET_RADIUS_KM = 50.0
 # =========================
 # MARKET COORDINATES LOOKUP
 # =========================
+# Coordinates from WFP's Kenya food price dataset (the model's training data).
 MARKET_COORDS: dict[str, tuple[float, float]] = {
-    "Dagahaley (Daadab)":              (11.3577,  40.3740),
-    "Dandora (Nairobi)":               (-1.2529,  36.8893),
-    "Eldoret town (Uasin Gishu)":      (0.5196,   35.2697),
-    "Ethiopia (Kakuma)":               (3.7149,   34.8716),
-    "Garissa town (Garissa)":          (-0.4532,  39.6460),
-    "Hagadera (Daadab)":               (11.4007,  40.3627),
-    "HongKong (Kakuma)":               (3.7149,   34.8716),
-    "IFO (Daadab)":                    (11.5038,  40.7257),
-    "Illbissil Food Market (Kajiado)": (-2.0177,  36.9023),
-    "Kaanwa (Tharaka Nithi)":          (0.3000,   37.9000),
-    "Kakuma 2":                        (3.7149,   34.8716),
-    "Kakuma 3":                        (3.7149,   34.8716),
-    "Kakuma 4":                        (3.7149,   34.8716),
-    "Kalahari (Mombasa)":              (-4.0500,  39.6700),
-    "Kalobeyei (Village 1)":           (3.8000,   34.8500),
-    "Kalobeyei (Village 2)":           (3.8000,   34.8500),
-    "Kalobeyei (Village 3)":           (3.8000,   34.8500),
-    "Kangemi (Nairobi)":               (-1.2570,  36.7330),
-    "Karatina (Nyeri)":                (-0.4818,  37.1255),
-    "Kathonzweni (Makueni)":           (-1.9000,  37.5000),
-    "Kawangware (Nairobi)":            (-1.2670,  36.7380),
-    "Kibra (Nairobi)":                 (-1.3130,  36.7840),
-    "Kibuye (Kisumu)":                 (-0.0917,  34.7500),
-    "Kisumu":                          (-0.1022,  34.7617),
-    "Kitengela (Kajiado)":             (-1.4767,  36.9614),
-    "Kitui":                           (-1.3667,  38.0100),
-    "Kongowea (Mombasa)":              (-4.0177,  39.7207),
-    "Lodwar town":                     (3.1190,   35.5975),
-    "Lomut (West Pokot)":              (1.6000,   35.3000),
-    "Makutano (West Pokot)":           (1.2000,   35.1000),
-    "Marigat town (Baringo)":          (0.4667,   35.9833),
-    "Mathare (Nairobi)":               (-1.2610,  36.8510),
-    "Mogadishu (Kakuma)":              (3.7149,   34.8716),
-    "Mukuru (Nairobi)":                (-1.3190,  36.8710),
-    "Nairobi":                         (-1.2921,  36.8219),
-    "Nakuru":                          (-0.3031,  36.0800),
-    "Takaba (Mandera)":                (3.8800,   41.1500),
-    "Tala Centre Market (Machakos)":   (-1.3700,  37.3600),
-    "Wakulima (Nairobi)":              (-1.2921,  36.8219),
-    "Wakulima (Nakuru)":               (-0.3031,  36.0800),
+    "Dagahaley (Daadab)":              (0.19, 40.29),
+    "Dandora (Nairobi)":               (-1.25, 36.90),
+    "Eldoret town (Uasin Gishu)":      (0.52, 35.28),
+    "Ethiopia (Kakuma)":               (3.72, 34.85),
+    "Garissa town (Garissa)":          (-0.46, 39.64),
+    "Hagadera (Daadab)":               (0.01, 40.37),
+    "HongKong (Kakuma)":               (3.75, 34.84),
+    "IFO (Daadab)":                    (0.11, 40.32),
+    "Illbissil Food Market (Kajiado)": (-2.10, 36.79),
+    "Kaanwa (Tharaka Nithi)":          (-0.32, 37.72),
+    "Kakuma 2":                        (3.75, 34.82),
+    "Kakuma 3":                        (3.77, 34.82),
+    "Kakuma 4":                        (3.74, 34.81),
+    "Kalahari (Mombasa)":              (-4.03, 39.63),
+    "Kalobeyei (Village 1)":           (3.77, 34.73),
+    "Kalobeyei (Village 2)":           (3.76, 34.75),
+    "Kalobeyei (Village 3)":           (3.75, 34.76),
+    "Kangemi (Nairobi)":               (-1.27, 36.74),
+    "Karatina (Nyeri)":                (-0.48, 37.13),
+    "Kathonzweni (Makueni)":           (-1.91, 37.73),
+    "Kawangware (Nairobi)":            (-1.28, 36.74),
+    "Kibra (Nairobi)":                 (-1.32, 36.78),
+    "Kibuye (Kisumu)":                 (-0.09, 34.77),
+    "Kisumu":                          (-0.10, 34.75),
+    "Kitengela (Kajiado)":             (-1.29, 36.86),
+    "Kitui":                           (-1.37, 38.02),
+    "Kongowea (Mombasa)":              (-4.06, 39.66),
+    "Lodwar town":                     (3.12, 35.60),
+    "Lomut (West Pokot)":              (1.44, 35.57),
+    "Makutano (West Pokot)":           (1.25, 35.08),
+    "Marigat town (Baringo)":          (0.47, 35.98),
+    "Mathare (Nairobi)":               (-1.26, 36.86),
+    "Mogadishu (Kakuma)":              (3.72, 34.85),
+    "Mukuru (Nairobi)":                (-1.30, 36.88),
+    "Nairobi":                         (-1.28, 36.82),
+    "Nakuru":                          (-0.28, 36.07),
+    "Takaba (Mandera)":                (3.39, 40.23),
+    "Tala Centre Market (Machakos)":   (-1.27, 37.32),
+    "Wakulima (Nairobi)":              (-1.29, 36.83),
+    "Wakulima (Nakuru)":               (-0.30, 36.08),
 }
+
+# Manual corrections to WFP's coordinates. EMPTY on purpose: add an entry only with a source
+# you have checked (survey, official gazetteer, OpenStreetMap node, ...). Example shape:
+#   "Some market (County)": {"lat": -1.23, "lon": 36.45, "source": "<URL or reference>",
+#                            "note": "why WFP's value is wrong"},
+# Suspected problems (unverified, so NOT applied): "Kitengela (Kajiado)" is listed by WFP at
+# (-1.29, 36.86), essentially Nairobi, although Kitengela town is roughly 30 km south.
+# Overrides also change the lat/lon features the legacy RandomForest sees in /predict.
+MARKET_COORD_OVERRIDES: dict[str, dict] = {}
+MARKET_COORDS = apply_coord_overrides(MARKET_COORDS, MARKET_COORD_OVERRIDES)
 
 # =========================
 # COMMODITY METADATA
@@ -142,6 +233,11 @@ class PredictResponse(BaseModel):
     upper_bound:          float
     unreasonable:         bool
     note:                 str
+    # Added in 2.0.0 (optional, additive)
+    model_used:           Optional[str] = None   # "naive_last" | "random_forest"
+    fallback_reason:      Optional[str] = None   # None, or why the champion model was not used
+    # Added (optional, additive): which error band was used, e.g. "Tomatoes/Wholesale", "Tomatoes", "_ALL"
+    band_source:          Optional[str] = None
 
 class RecommendationRequest(BaseModel):
     commodity:       str
@@ -164,6 +260,8 @@ class MicroMarketRequest(BaseModel):
     region:    str
     radius_km: Optional[float] = DEFAULT_MICRO_MARKET_RADIUS_KM
     date:      str
+    # Added (optional, additive): restrict the nearby price to one pricetype (Retail or Wholesale).
+    pricetype: Optional[str] = None
 
 class MicroMarketResponse(BaseModel):
     commodity:          str
@@ -172,6 +270,10 @@ class MicroMarketResponse(BaseModel):
     localized_forecast: Dict[str, float]
     recommended_market: str
     market_comparison:  str
+    # Added (optional, additive): where the market coordinates come from.
+    data_source:        Optional[str] = None
+    # Added (optional, additive): month the nearby WFP prices run through (null when price data is off).
+    price_data_through: Optional[str] = None
 
 class FormatRequest(BaseModel):
     prediction_data: Dict
@@ -205,10 +307,14 @@ class ExplainabilityResponse(BaseModel):
     top_influencing_factors:  List[Dict[str, Any]]
     explanation_summary:      str
     confidence_factors:       Dict[str, Any]
+    # Added in 2.0.0 (optional, additive)
+    model_used:               Optional[str] = None
+    fallback_reason:          Optional[str] = None
 
 class FeedbackRequest(BaseModel):
     user_id:          Optional[str] = None
     prediction_id:    Optional[str] = None
+    predicted_price:  Optional[float] = None   # what the API predicted; enables MAPE in /impact-stats
     actual_price:     Optional[float] = None
     accuracy_rating:  Optional[int] = None
     usefulness_rating: Optional[int] = None
@@ -226,14 +332,20 @@ class WebhookBody(BaseModel):
     body:        str
 
 class ImpactStatsResponse(BaseModel):
-    total_predictions:    int
-    total_users:          int
-    average_accuracy:     float
+    # None = no supporting data (never a made-up number).
+    total_predictions:    Optional[int] = None    # predictions are not logged -> always None
+    total_users:          int                     # distinct user_id values in feedback
+    average_accuracy:     Optional[float] = None  # 1 - MAPE (0..1) from feedback with predicted+actual price
     total_markets_covered: int
     commodities_tracked:  List[str]
-    user_satisfaction:    float
-    cost_savings_estimate: float
+    user_satisfaction:    Optional[float] = None  # mean usefulness_rating (1-5)
+    cost_savings_estimate: Optional[float] = None # not measurable -> always None
     last_updated:         str
+    # Additional real metrics
+    feedback_count:           int = 0
+    average_accuracy_rating:  Optional[float] = None  # mean accuracy_rating (1-5)
+    mape_pct:                 Optional[float] = None
+    price_comparisons:        int = 0                 # feedback rows used for MAPE
 
 # =========================
 # INIT APP
@@ -316,7 +428,7 @@ def build_feature_vector(req: PredictRequest):
 
     # Label encoding
     def encode(col: str, val: str) -> int:
-        enc = label_encoders[col]
+        enc = _encoders()["label_encoders"][col]
         try:
             return int(enc.transform([val])[0])
         except ValueError:
@@ -377,7 +489,7 @@ def adjusted_confidence(base_conf: float, estimated_fields: list) -> tuple[float
     note = ""
     if notes:
         note = (
-            f"⚠️ Confidence adjusted to {adj:.0f}% — "
+            f"Confidence adjusted to {adj:.0f}% — "
             f"{', '.join(notes)} from previous_month_price. "
             f"Pass price history fields for a more accurate forecast."
         )
@@ -408,6 +520,7 @@ def root():
             "/explainability": "POST - AI prediction explanations",
             "/feedback":      "POST - Submit feedback on predictions",
             "/impact-stats":  "GET  - Aggregated impact statistics",
+            "/health":        "GET  - Service and champion model status",
         },
         "example_request": {
             "date": "2025-12-05",
@@ -448,22 +561,76 @@ def predict_info():
         "docs":    "/docs",
     }
 
-@app.post("/predict", response_model=PredictResponse)
-def predict(req: PredictRequest):
+def _estimated_fields(req) -> list:
+    """Price-history fields the caller did not supply (same names as before)."""
+    estimated = []
+    if req.price_3_months_ago is None: estimated.append("price_lag_3")
+    if req.price_6_months_ago is None: estimated.append("price_lag_6")
+    if req.price_ma_3         is None: estimated.append("price_ma_3")
+    if req.price_ma_6         is None: estimated.append("price_ma_6")
+    if req.price_vol_6        is None: estimated.append("price_vol_6")
+    return estimated
+
+def _check_inputs(req) -> None:
+    """Same 400 errors as before. Encoder checks run only when the encoders load,
+    because the naive champion does not need them."""
     norm = req.commodity.strip().lower()
     if norm not in COMMODITY_META:
         raise HTTPException(
             status_code=400,
             detail=f"Commodity '{req.commodity}' not supported. Allowed: {sorted(COMMODITY_META.keys())}"
         )
+    try:
+        _encoders()
+    except RuntimeError:
+        try:
+            datetime.strptime(req.date, "%Y-%m-%d")
+        except ValueError:
+            raise HTTPException(status_code=400, detail=f"Invalid date '{req.date}'. Use YYYY-MM-DD.")
+        _resolve_market(req.market)
+        return
+    build_feature_vector(req)
 
-    X, estimated       = build_feature_vector(req)
-    pred, lo, hi, conf = rf_confidence(model, X)
-    conf_adj, conf_note = adjusted_confidence(conf * 100, estimated)
+def _forecast(req, canonical: str) -> dict:
+    """Run the Predictor and attach the confidence. Used by /predict and /explainability."""
+    try:
+        pricetype = (getattr(req, "pricetype", None) or "").strip() or None
+        out = PREDICTOR.predict(req.model_dump(), req.previous_month_price, canonical, pricetype)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
+    pred, lo, hi = out["predicted_price"], out["lower"], out["upper"]
+    estimated    = _estimated_fields(req)
+    conf         = float(confidence_from_band(lo, hi, pred))
+    conf_note    = ""
+    if out["model_used"] == "random_forest":
+        # The RF uses the price-history fields, so the old penalty still applies to it.
+        # The penalty can only lower confidence, never raise it.
+        penalised, conf_note = adjusted_confidence(conf, estimated)
+        conf = min(conf, penalised)
+    return {
+        "predicted":       pred,
+        "lower":           lo,
+        "upper":           hi,
+        "confidence":      conf,
+        "conf_note":       conf_note,
+        "estimated":       estimated,
+        "model_used":      out["model_used"],
+        "fallback_reason": out["fallback_reason"],
+        "band_source":     out["band_source"],
+    }
+
+@app.post("/predict", response_model=PredictResponse)
+def predict(req: PredictRequest):
+    norm = req.commodity.strip().lower()
+    _check_inputs(req)
+    fc = _forecast(req, COMMODITY_META[norm][0])
+
+    pred         = fc["predicted"]
+    lo, hi       = fc["lower"], fc["upper"]
     threshold    = CROP_THRESHOLDS.get(norm, pred * 1.5)
     unreasonable = pred > threshold
-    note = conf_note or (
+    note = fc["conf_note"] or (
         "Prediction within normal range." if not unreasonable
         else f"Unreasonable: exceeds threshold of {threshold}/kg."
     )
@@ -476,12 +643,15 @@ def predict(req: PredictRequest):
         "unit":                 "kg",
         "market_type":          req.pricetype,
         "previous_month_price": req.previous_month_price,
-        "confidence_pct":       conf_adj,
-        "error_margin":         f"+-{round(hi - pred, 2)}",
+        "confidence_pct":       fc["confidence"],
+        "error_margin":         f"+-{round(max(hi - pred, pred - lo), 2)}",
         "lower_bound":          round(lo, 2),
         "upper_bound":          round(hi, 2),
         "unreasonable":         unreasonable,
         "note":                 note,
+        "model_used":           fc["model_used"],
+        "fallback_reason":      fc["fallback_reason"],
+        "band_source":          fc["band_source"],
     }
 
 # =========================
@@ -496,50 +666,70 @@ async def get_recommendations_endpoint(req: EnhancedRecommendationRequest):
 # =========================
 # MICRO-MARKET
 # =========================
+MICRO_MARKET_MAX_RESULTS = 5
+MICRO_MARKET_DATA_SOURCE = ("WFP market coordinates" if not MARKET_COORD_OVERRIDES else
+                            f"WFP market coordinates ({len(MARKET_COORD_OVERRIDES)} manually corrected)")
+MICRO_MARKET_PRICE_NOTE  = "No recent price for this market in the API; check the market or WFP data."
+
 @app.post("/micro-market", response_model=MicroMarketResponse)
 def get_micro_market_forecast(req: MicroMarketRequest):
+    """Real nearby markets (WFP coordinates). Each market gets the latest WFP observation for the
+    commodity if it is at most 3 months older than the price data; otherwise estimated_price is
+    null and price_note says why. Prices are never interpolated or forecast here."""
     commodity_normalized = req.commodity.strip().lower()
     if commodity_normalized not in ALLOWED_COMMODITIES:
         raise HTTPException(status_code=400,
             detail=f"Commodity '{req.commodity}' not supported.")
 
-    base_price = CROP_THRESHOLDS.get(commodity_normalized, 50)
-    nearby_markets = [
-        {"market_name": f"{req.region} Central Market",
-         "distance_km": 0.0,
-         "estimated_price": round(base_price * 0.9, 2),
-         "market_type": "wholesale"},
-        {"market_name": f"{req.region} Retail Hub",
-         "distance_km": round(req.radius_km * 0.3, 1),
-         "estimated_price": round(base_price * 1.1, 2),
-         "market_type": "retail"},
-        {"market_name": f"Near {req.region} Market",
-         "distance_km": round(req.radius_km * 0.6, 1),
-         "estimated_price": round(base_price * 0.95, 2),
-         "market_type": "mixed"},
-    ]
+    origin = _resolve_market(req.region)   # 400 when the region is not a known market
+    radius = req.radius_km if req.radius_km is not None else DEFAULT_MICRO_MARKET_RADIUS_KM
+    try:
+        found = markets_within_radius(origin, MARKET_COORDS, radius, limit=MICRO_MARKET_MAX_RESULTS)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    prices     = [m["estimated_price"] for m in nearby_markets]
-    avg_price  = np.mean(prices)
-    min_price  = min(prices)
-    max_price  = max(prices)
-    spread     = max_price - min_price
+    canonical = COMMODITY_META[commodity_normalized][0]
+    pricetype = req.pricetype.strip().capitalize() if req.pricetype and req.pricetype.strip() else None
+    nearby_markets = []
+    for m in found:
+        if LATEST_PRICES is None:
+            price = {"estimated_price": None, "price_per_kg": None, "price_date": None, "price_unit": None,
+                     "price_pricetype": None, "price_note": MICRO_MARKET_PRICE_NOTE}
+        else:
+            price = LATEST_PRICES.estimate(m["market"], canonical, pricetype)
+        nearby_markets.append({"market_name": m["market"], "distance_km": m["distance_km"],
+                               "market_type": None, **price})
+
+    priced = sum(1 for m in nearby_markets if m["estimated_price"] is not None)
+    if not nearby_markets:
+        comparison = f"No markets within {radius:g} km of {origin}."
+    elif LATEST_PRICES is None:
+        comparison = (
+            f"Found {len(nearby_markets)} market(s) within {radius:g} km of {origin}. "
+            "No prices for these markets are available in this API, so they are not compared."
+        )
+    elif priced:
+        comparison = (
+            f"Found {len(nearby_markets)} market(s) within {radius:g} km of {origin}. "
+            f"Latest WFP prices are shown for {priced} of them (see price_date). "
+            "They are not compared or forecast."
+        )
+    else:
+        comparison = (
+            f"Found {len(nearby_markets)} market(s) within {radius:g} km of {origin}. "
+            f"None has a recent WFP price for {req.commodity} (see price_note)."
+        )
 
     return {
         "commodity": req.commodity,
         "region":    req.region,
         "nearby_markets": nearby_markets,
-        "localized_forecast": {
-            "average_price":  round(avg_price, 2),
-            "min_price":      round(min_price, 2),
-            "max_price":      round(max_price, 2),
-            "price_variance": round(spread, 2),
-        },
-        "recommended_market": nearby_markets[0]["market_name"],
-        "market_comparison": (
-            f"High price variance ({round(spread, 2)} KES) — shopping around could save money."
-            if spread > 10 else "Relatively stable prices across nearby markets."
-        ),
+        "localized_forecast": {},
+        # Nearest market by distance, not a price-based recommendation.
+        "recommended_market": nearby_markets[0]["market_name"] if nearby_markets else "",
+        "market_comparison":  comparison,
+        "data_source":        MICRO_MARKET_DATA_SOURCE,
+        "price_data_through": LATEST_PRICES.data_through if LATEST_PRICES is not None else None,
     }
 
 # =========================
@@ -565,13 +755,13 @@ def format_for_users(req: FormatRequest):
         cost = 0.50
     elif fmt == "whatsapp":
         msg = (
-            f"📊 *Market Price Forecast*\n\n"
-            f"🌾 Commodity: {commodity}\n"
-            f"📍 Market: {market}\n"
-            f"📅 Date: {date}\n\n"
-            f"💰 Predicted Price: *KES {prediction}/kg*\n"
-            f"📉 Previous Price: KES {prev_price}/kg\n"
-            f"📊 Confidence: {conf}%\n\n"
+            f"*Market Price Forecast*\n\n"
+            f"Commodity: {commodity}\n"
+            f"Market: {market}\n"
+            f"Date: {date}\n\n"
+            f"Predicted Price: *KES {prediction}/kg*\n"
+            f"Previous Price: KES {prev_price}/kg\n"
+            f"Confidence: {conf}%\n\n"
             f"{note}\n\n"
             f"_Powered by CropEx_"
         )
@@ -611,33 +801,49 @@ def get_explainability(req: ExplainabilityRequest):
         raise HTTPException(status_code=400,
             detail=f"Commodity '{req.commodity}' not supported.")
 
-    X, estimated = build_feature_vector(req)
-    pred, lo, hi, _ = rf_confidence(model, X)
-    conf_adj, _ = adjusted_confidence(90.0, estimated)
+    _check_inputs(req)
+    fc        = _forecast(req, COMMODITY_META[norm][0])
+    pred      = fc["predicted"]
+    conf_adj  = fc["confidence"]
+    estimated = fc["estimated"]
+    naive     = fc["model_used"] == "naive_last"
 
+    descriptions = {
+        "3-Month Price Average": "Rolling 3-month average drives ~91% of model signal",
+        "Previous Month Price":  f"Last recorded price of {req.previous_month_price} KES/kg",
+        "Price Volatility":      "6-month std dev reflects market stability",
+        "Seasonality":           "Month-of-year cyclical pattern (sin/cos encoded)",
+        "Market Location":       f"{req.market} lat/lon and location features",
+        "Other":                 "Longer price lags, 6-month average, commodity, unit, price type and year",
+    }
     top_influencing_factors = [
-        {"factor": "3-Month Price Average",  "importance": 0.91, "impact": "Very High",
-         "description": "Rolling 3-month average drives ~91% of model signal"},
-        {"factor": "Previous Month Price",   "importance": 0.03, "impact": "Low",
-         "description": f"Last recorded price of {req.previous_month_price} KES/kg"},
-        {"factor": "Price Volatility",       "importance": 0.01, "impact": "Low",
-         "description": "6-month std dev reflects market stability"},
-        {"factor": "Seasonality",            "importance": 0.01, "impact": "Low",
-         "description": "Month-of-year cyclical pattern (sin/cos encoded)"},
-        {"factor": "Market Location",        "importance": 0.003, "impact": "Minimal",
-         "description": f"{req.market} lat/lon and location features"},
+        {"factor": factor, "importance": importance, "impact": impact_label(importance),
+         "description": descriptions[factor]}
+        for factor, importance in _factor_importances()
     ]
 
-    explanation_summary = (
-        f"The forecast of KES {pred:.0f}/kg for {req.commodity} at {req.market} "
-        f"is primarily driven by the 3-month rolling price average (~91% of model signal). "
-        + (
-            "price_ma_3 was estimated from previous_month_price — "
-            "provide it directly for a more reliable forecast."
-            if "price_ma_3" in estimated else
-            "Full price history was provided — forecast reliability is good."
+    if naive:
+        # The forecast is last month's price. The factor list describes the RF (global
+        # importances) and is shown for reference only; it does not drive this number.
+        explanation_summary = (
+            f"The forecast of KES {pred:.0f}/kg for {req.commodity} at {req.market} "
+            "is last month's price (naive forecast, which beat the random forest in "
+            "walk-forward backtesting). The factor importances describe the random forest "
+            "and are for reference only."
         )
-    )
+        dominant = "previous_month_price (naive forecast)"
+    else:
+        explanation_summary = (
+            f"The forecast of KES {pred:.0f}/kg for {req.commodity} at {req.market} "
+            f"is primarily driven by the 3-month rolling price average (~91% of model signal). "
+            + (
+                "price_ma_3 was estimated from previous_month_price — "
+                "provide it directly for a more reliable forecast."
+                if "price_ma_3" in estimated else
+                "Full price history was provided — forecast reliability is good."
+            )
+        )
+        dominant = "price_ma_3 (3-month moving average)"
 
     return {
         "commodity":               req.commodity,
@@ -647,11 +853,55 @@ def get_explainability(req: ExplainabilityRequest):
         "explanation_summary":     explanation_summary,
         "confidence_factors": {
             "confidence_pct":        conf_adj,
-            "dominant_feature":      "price_ma_3 (3-month moving average)",
+            "dominant_feature":      dominant,
             "fields_estimated":      estimated,
             "data_quality":          "degraded" if estimated else "good",
             "prediction_reliability": "limited" if estimated else "good",
         },
+        "model_used":              fc["model_used"],
+        "fallback_reason":         fc["fallback_reason"],
+    }
+
+# =========================
+# HEALTH
+# =========================
+def _feedback_db_writable() -> bool:
+    """Checks the path feedback_store would use. Writes nothing."""
+    try:
+        path = os.path.abspath(feedback_store.get_db_path())
+        if os.path.exists(path):
+            return os.path.isfile(path) and os.access(path, os.W_OK)
+        d = os.path.dirname(path)
+        while not os.path.isdir(d):
+            parent = os.path.dirname(d)
+            if parent == d:
+                break
+            d = parent
+        return os.path.isdir(d) and os.access(d, os.W_OK)
+    except Exception:
+        return False
+
+@app.get("/health")
+def health():
+    rf_loaded = _RF.get() is not None   # loads the RF once, then cached
+    writable  = _feedback_db_writable()
+    champ_problem = CHAMPION.get("load_problem")
+    degraded = (
+        champ_problem is not None
+        or not writable
+        or (CHAMPION.get("model_type") == "random_forest" and not rf_loaded)
+    )
+    return {
+        "status":                  "degraded" if degraded else "ok",
+        "champion_model_type":     CHAMPION.get("model_type"),
+        "champion_source":         CHAMPION.get("source"),
+        "data_through":            CHAMPION.get("data_through"),
+        "champion_load_problem":   champ_problem,
+        "rf_model_loaded":         rf_loaded,
+        "rf_load_problem":         _RF.problem,
+        "feedback_db_writable":    writable,
+        "api_version":             API_VERSION,
+        "champion_schema_version": CHAMPION.get("schema_version"),
     }
 
 # =========================
@@ -659,13 +909,30 @@ def get_explainability(req: ExplainabilityRequest):
 # =========================
 @app.post("/feedback", response_model=FeedbackResponse)
 def collect_feedback(req: FeedbackRequest):
-    timestamp   = req.timestamp or datetime.now().isoformat()
-    feedback_id = f"FB-{str(uuid.uuid4())[:8]}"
+    timestamp = req.timestamp or datetime.now().isoformat()
 
-    if req.accuracy_rating and not (1 <= req.accuracy_rating <= 5):
+    if req.accuracy_rating is not None and not (1 <= req.accuracy_rating <= 5):
         raise HTTPException(status_code=400, detail="accuracy_rating must be 1–5")
-    if req.usefulness_rating and not (1 <= req.usefulness_rating <= 5):
+    if req.usefulness_rating is not None and not (1 <= req.usefulness_rating <= 5):
         raise HTTPException(status_code=400, detail="usefulness_rating must be 1–5")
+
+    try:
+        saved = feedback_store.save_feedback(
+            user_id=req.user_id,
+            prediction_id=req.prediction_id,
+            predicted_price=req.predicted_price,
+            actual_price=req.actual_price,
+            accuracy_rating=req.accuracy_rating,
+            usefulness_rating=req.usefulness_rating,
+            comments=req.comments,
+            client_timestamp=req.timestamp,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception:
+        # Don't pretend it was stored (e.g. read-only or missing disk).
+        raise HTTPException(status_code=503, detail="Feedback could not be saved right now. Please retry later.")
+    feedback_id = saved["feedback_id"]
 
     return {
         "feedback_id": feedback_id,
@@ -679,13 +946,21 @@ def collect_feedback(req: FeedbackRequest):
 # =========================
 @app.get("/impact-stats", response_model=ImpactStatsResponse)
 def get_impact_stats():
+    try:
+        s = feedback_store.compute_stats()
+    except Exception:
+        raise HTTPException(status_code=503, detail="Feedback statistics are unavailable right now.")
     return {
-        "total_predictions":     15420,
-        "total_users":           3847,
-        "average_accuracy":      0.842,
-        "total_markets_covered": 40,
+        "total_predictions":     None,  # predictions are not logged
+        "total_users":           s["distinct_users"],
+        "average_accuracy":      s["price_accuracy"],
+        "total_markets_covered": len(MARKET_COORDS),
         "commodities_tracked":   sorted(COMMODITY_META.keys()),
-        "user_satisfaction":     4.3,
-        "cost_savings_estimate": 2847500.00,
-        "last_updated":          datetime.now().isoformat(),
+        "user_satisfaction":     s["average_usefulness_rating"],
+        "cost_savings_estimate": None,  # not measurable
+        "last_updated":          s["last_feedback_at"] or datetime.now().isoformat(),
+        "feedback_count":          s["feedback_count"],
+        "average_accuracy_rating": s["average_accuracy_rating"],
+        "mape_pct":                s["mape_pct"],
+        "price_comparisons":       s["price_comparisons"],
     }

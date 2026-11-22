@@ -1,0 +1,114 @@
+{
+  "schema_version": 2,
+  "model_type": "naive_last",
+  "model_file": null,
+  "created_at": "2026-11-22T06:02:46+00:00",
+  "data_through": "2026-10",
+  "backtest": {
+    "window_months": 60,
+    "n": 2021,
+    "mape": 15.593,
+    "naive_mape": 15.593,
+    "median_ape": 9.744
+  },
+  "error_bands": {
+    "Bananas": {
+      "n": 280,
+      "ratio_p10": 0.9558,
+      "ratio_p50": 1.0,
+      "ratio_p90": 1.0215
+    },
+    "Cabbage": {
+      "n": 263,
+      "ratio_p10": 0.7225,
+      "ratio_p50": 1.0,
+      "ratio_p90": 1.3451
+    },
+    "Kale": {
+      "n": 273,
+      "ratio_p10": 0.7396,
+      "ratio_p50": 1.0,
+      "ratio_p90": 1.4208
+    },
+    "Onions (dry)": {
+      "n": 272,
+      "ratio_p10": 0.8,
+      "ratio_p50": 1.0,
+      "ratio_p90": 1.2507
+    },
+    "Potatoes (Irish)": {
+      "n": 614,
+      "ratio_p10": 0.7969,
+      "ratio_p50": 1.0,
+      "ratio_p90": 1.2863
+    },
+    "Tomatoes": {
+      "n": 319,
+      "ratio_p10": 0.758,
+      "ratio_p50": 1.0,
+      "ratio_p90": 1.2465
+    },
+    "_ALL": {
+      "n": 2021,
+      "ratio_p10": 0.7742,
+      "ratio_p50": 1.0,
+      "ratio_p90": 1.2769
+    }
+  },
+  "error_bands_by_pricetype": {
+    "Bananas": {
+      "Retail": {
+        "n": 280,
+        "ratio_p10": 0.9558,
+        "ratio_p50": 1.0,
+        "ratio_p90": 1.0215
+      }
+    },
+    "Cabbage": {
+      "Wholesale": {
+        "n": 263,
+        "ratio_p10": 0.7225,
+        "ratio_p50": 1.0,
+        "ratio_p90": 1.3451
+      }
+    },
+    "Kale": {
+      "Wholesale": {
+        "n": 273,
+        "ratio_p10": 0.7396,
+        "ratio_p50": 1.0,
+        "ratio_p90": 1.4208
+      }
+    },
+    "Onions (dry)": {
+      "Wholesale": {
+        "n": 272,
+        "ratio_p10": 0.8,
+        "ratio_p50": 1.0,
+        "ratio_p90": 1.2507
+      }
+    },
+    "Potatoes (Irish)": {
+      "Retail": {
+        "n": 325,
+        "ratio_p10": 0.7792,
+        "ratio_p50": 1.0,
+        "ratio_p90": 1.243
+      },
+      "Wholesale": {
+        "n": 289,
+        "ratio_p10": 0.812,
+        "ratio_p50": 1.0179,
+        "ratio_p90": 1.3334
+      }
+    },
+    "Tomatoes": {
+      "Wholesale": {
+        "n": 319,
+        "ratio_p10": 0.758,
+        "ratio_p50": 1.0,
+        "ratio_p90": 1.2465
+      }
+    }
+  }
+}

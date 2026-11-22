@@ -1,8 +1,8 @@
 # 🌾 CropEx — Kenyan Agro Market Price Forecaster
 
-**Farmers text WhatsApp. AI predicts next month's crop prices. Farmers get actionable advice.**
+**Farmers text WhatsApp. The API forecasts next month's crop prices. Farmers get actionable advice.**
 
-A production-ready ML API that powers intelligent, multi-language agricultural price forecasting and market advice for smallholder farmers in Kenya. Built with Python (FastAPI), Gemini LLM, scikit-learn, and designed for seamless Node.js/Twilio integration.
+A prototype ML API that powers intelligent, multi-language agricultural price forecasting and market advice for smallholder farmers in Kenya. Built with Python (FastAPI), Gemini LLM, scikit-learn, and designed for seamless Node.js/Twilio integration.
 
 ---
 
@@ -12,7 +12,6 @@ A production-ready ML API that powers intelligent, multi-language agricultural p
 - Text `"price of mahindi"` or `"jambo"` → Get instant market advice
 - Bilingual support (English + Swahili)
 - AI-powered recommendations ("SELL", "HOLD", "MONITOR") with reasoning
-- Works on feature phones via SMS
 
 ### 👨‍💻 Backend/Node.js Integrators
 - **Start here:** [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md)
@@ -21,9 +20,9 @@ A production-ready ML API that powers intelligent, multi-language agricultural p
 - All schemas documented in [SCHEMAS.md](SCHEMAS.md)
 
 ### 🔬 ML/Data Scientists
-- Random Forest model trained on Kenyan market data
-- SHAP-powered explainability (`/explainability`)
-- Feedback endpoint ready for model retraining (`/feedback`)
+- Served forecast is a naive last-month champion (`naive_last`), chosen by a 60-month walk-forward backtest. See [RETRAINING_RESEARCH.md](RETRAINING_RESEARCH.md)
+- Feature importances of the legacy Random Forest for `/explainability` (not SHAP)
+- Feedback is stored in SQLite (`/feedback`); the monthly retrain pipeline is a draft ([pipeline/README.md](pipeline/README.md))
 - All feature engineering in [price_api/app.py](price_api/app.py)
 
 ---
@@ -42,13 +41,13 @@ Twilio WhatsApp                 Your C++ Engine
   │   (This Repo)      │
   └────────────────────┘
       ├─ /webhook ─────────────────→ Intent Classification (Rules + Gemini)
-      ├─ /predict ─────────────────→ ML Price Forecast (Random Forest)
+      ├─ /predict ─────────────────→ Price Forecast (naive last-month champion, 80% band)
       ├─ /recommendations ────────→ AI Farmer Message (Gemini-powered)
       ├─ /format ──────────────────→ SMS/WhatsApp Formatting
-      ├─ /micro-market ────────────→ Regional Price Comparison
-      ├─ /explainability ─────────→ Prediction Interpretation (SHAP)
-      ├─ /feedback ────────────────→ Accuracy Collection
-      └─ /impact-stats ────────────→ System Metrics
+      ├─ /micro-market ────────────→ Nearby Markets (distance + latest WFP price if recent)
+      ├─ /explainability ─────────→ Feature Importances (legacy Random Forest)
+      ├─ /feedback ────────────────→ Feedback Storage (SQLite)
+      └─ /impact-stats ────────────→ Stats from Stored Feedback
 
 ```
 
@@ -56,7 +55,7 @@ Twilio WhatsApp                 Your C++ Engine
 
 ## 🚀 Quick Start
 
-### 1. **Setup** (5 mins)
+### 1. **Setup**
 ```bash
 git clone https://github.com/AllanOnyonka-ltsm/Market-Forecaster-Kenyan-Agro-Market-Prototype-Mark-1-.git
 cd Market-Forecaster-Kenyan-Agro-Market-Prototype-Mark-1-/price_api
@@ -90,6 +89,8 @@ Follow [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) + use [SCHEMAS.md](SCHEMAS.m
 | [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) | Node.js devs | Flow diagram, checklist, code examples |
 | [SCHEMAS.md](SCHEMAS.md) | All integrators | Exact request/response shapes, all endpoints |
 | [API_ENDPOINTS.md](price_api/API_ENDPOINTS.md) | API users | Detailed endpoint descriptions, examples |
+| [RETRAINING_RESEARCH.md](RETRAINING_RESEARCH.md) | ML / data scientists | Why the naive forecast is the champion; backtest results and caveats |
+| [pipeline/README.md](pipeline/README.md) | Maintainers | Monthly retrain pipeline (draft; it proposes a refreshed `champion.json`, which `/predict` reads, by pull request) |
 | [README.md](README.md) | You | Architecture, features, roadmap (this file) |
 
 ---
@@ -102,21 +103,21 @@ Follow [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) + use [SCHEMAS.md](SCHEMAS.m
    - Bilingual support (English + Swahili)
    - Structured output for downstream engines
 
-2. **AI Price Prediction** (`/predict`)
-   - Random Forest model trained on Kenyan market data
-   - Returns: predicted price, confidence%, upper/lower bounds
-   - Handles missing price history gracefully
+2. **Price Forecast** (`/predict`)
+   - Served model: naive last-month champion (`price_api/artifacts/champion.json`), so the prediction equals last month's price
+   - Returns: predicted price, confidence%, lower/upper bounds (80% band from the backtest), `model_used`, `fallback_reason`
+   - Price-history fields are optional; with the current champion they do not change the forecast
 
 3. **Gemini-Powered Recommendations** (`/recommendations`) - ⭐ **NEW**
-   - AI-generated farmer messages
+   - Rule-based action; farmer message generated by Gemini, with a template fallback
    - Recommends: SELL, HOLD, or MONITOR
    - WhatsApp-ready, emoji-rich text
    - Fallback templates if LLM unavailable
 
-4. **Actionable Advice** — All endpoints support:
-   - Multi-language support (English + Swahili crops)
+4. **Actionable Advice** — Endpoints provide:
+   - Swahili crop names and greetings in `/webhook` only; other endpoints take English commodity names
    - Error handling with clear messages
-   - Detailed explanations (XAI) for every prediction
+   - `/explainability` shows legacy Random Forest feature importances (not a per-prediction explanation)
 
 ---
 
@@ -159,7 +160,7 @@ curl -X POST http://localhost:8000/recommendations \
   }'
 ```
 
-Response (excerpt):
+Response (excerpt; illustrative shape, `farmer_message` wording is generated by Gemini and varies):
 ```json
 {
   "action": "sell",
@@ -173,12 +174,12 @@ Response (excerpt):
 
 The `/webhook` endpoint intelligently classifies farmer messages into actionable intents, replacing exact keyword matching with a two-stage pipeline:
 
-1. **Stage 1: Rule-based Parser** (~50ms)
+1. **Stage 1: Rule-based Parser**
    - Fast patterns for common phrases
    - Recognizes English + Swahili crop names
    - Outputs: intent + structured data
 
-2. **Stage 2: Gemini LLM Fallback** (~2s, only if rules fail)
+2. **Stage 2: Gemini LLM Fallback** (only if rules fail)
    - Handles fuzzy, typo-ridden, or Swahili-heavy inputs
    - Classifies intent + extracts parameters
    - Returns same structured format as Stage 1
@@ -298,12 +299,11 @@ Or manually in Swagger UI: http://localhost:8000/docs
 ### 🔲 Medium Priority (After Launch)
 
 **6. Live Market Data Feed** (8 hours)
-- Replace synthetic prices with real Kenyan data
-- Sources: FEWS NET, City Council exchanges, market bulletins
-- Predictions grounded → farmer trust 10x
+- Current forecasts use WFP Kenya food prices (monthly pipeline is a draft, see [pipeline/README.md](pipeline/README.md))
+- Sources to add: FEWS NET, City Council exchanges, market bulletins
 
 **7. Analytics & Feedback Loop** (12 hours)
-- Persist predictions + feedback to database
+- Feedback is persisted to SQLite; predictions are not logged yet
 - Trigger monthly model rebuild with labeled data
 - Continuous improvement cycle
 
@@ -327,6 +327,10 @@ Market-Forecaster-Kenyan-Agro-Market-Prototype-Mark-1-/
 │   ├── intent_router.py               # Intent classification logic
 │   ├── enhanced_endpoints.py          # Recommendations engine
 │   ├── gemini_client.py               # Shared Gemini API helper
+│   ├── predictor.py                   # Champion selection, fallback, error bands
+│   ├── feedback_store.py              # SQLite feedback storage and stats
+│   ├── geo.py                         # Haversine distances for /micro-market
+│   ├── feature_importance.py          # Groups RF importances for /explainability
 │   ├── requirements.txt               # Python dependencies
 │   ├── API_ENDPOINTS.md               # Detailed endpoint docs
 │   ├── test_endpoints.py              # Full test suite
@@ -335,7 +339,8 @@ Market-Forecaster-Kenyan-Agro-Market-Prototype-Mark-1-/
 │       ├── random_forest_price_model.pkl
 │       ├── label_encoders.pkl
 │       ├── feature_columns.pkl
-│       └── preprocessing_info.pkl
+│       ├── preprocessing_info.pkl
+│       └── champion.json                  # Current forecast model (naive_last)
 └── reference_data.json                # Sample data for development
 ```
 
@@ -348,6 +353,9 @@ Market-Forecaster-Kenyan-Agro-Market-Prototype-Mark-1-/
 export GEMINI_API_KEY="your-gemini-api-key"
 
 # Get free key at: https://aistudio.google.com/app/apikey
+
+# Optional: SQLite file for /feedback (default: price_api/data/feedback.db)
+export FEEDBACK_DB_PATH="/path/to/feedback.db"
 ```
 
 Set in `.env` file:
@@ -389,18 +397,60 @@ uvicorn app:app --reload
 ```
 
 ### Production (Example: Heroku/Railway)
+FastAPI needs the uvicorn worker class under gunicorn (this matches `render.yaml`):
 ```bash
-gunicorn -w 4 -b 0.0.0.0:8000 app:app
+cd price_api
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 app:app
 ```
 
 ### Docker
 ```dockerfile
-FROM python:3.11-slim
+FROM python:3.12-slim
 WORKDIR /app
 COPY . .
-RUN pip install -r requirements.txt
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "app:app"]
+RUN pip install -r price_api/requirements.txt
+WORKDIR /app/price_api
+CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000", "app:app"]
 ```
+Untested sketch. Run from `price_api/` because the champion path (`artifacts/champion.json`) is relative.
+
+### Deploying feedback storage
+
+`/feedback` writes to a SQLite file. The path comes from `FEEDBACK_DB_PATH`; if it isn't set, the
+default is `price_api/data/feedback.db` inside the app folder.
+
+On Render (and most container hosts) the app's filesystem is **ephemeral**: it's wiped on every
+deploy and restart. With the default path, all stored feedback, and therefore every number in
+`/impact-stats`, is lost at the next deploy. To keep it:
+
+1. Attach a persistent disk to the web service, mounted at `/var/data`. On Render, disks need a paid
+   instance type, so check the current pricing first: that's your call, and `render.yaml` has
+   deliberately not been changed.
+2. Set the environment variable `FEEDBACK_DB_PATH=/var/data/feedback.db`.
+3. Redeploy. The parent folder is created automatically, and `/health` reports whether the feedback
+   database is writable.
+
+If you manage the service through `render.yaml`, the equivalent is roughly this (check Render's
+current Blueprint docs before using it):
+
+```yaml
+    disk:
+      name: feedback-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: FEEDBACK_DB_PATH
+        value: /var/data/feedback.db
+```
+
+Notes:
+- The 4 gunicorn workers share one SQLite file. `feedback_store.py` turns on WAL mode and a 10-second
+  busy timeout for concurrent writers. That's fine at prototype volume; move to Postgres if write
+  volume grows.
+- A Render service with a disk can't scale to more than one instance, and deploys have a short
+  downtime while the disk moves to the new instance.
+- Back up `/var/data/feedback.db` yourself (for example with `sqlite3 ... ".backup ..."`); the disk is
+  not a backup.
 
 ---
 

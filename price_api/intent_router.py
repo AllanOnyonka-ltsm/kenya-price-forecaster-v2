@@ -3,11 +3,9 @@
 # Drop this into your FastAPI app and wire /webhook to route_message()
 
 import re
-import os
 import json
-import httpx
 from enum import Enum
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional
 
 # ─── Enums & Data ────────────────────────────────────────────────────────────
@@ -50,20 +48,20 @@ GREETINGS = {
 PRICE_KEYWORDS = {"price", "bei", "cost", "thamani", "ngapi", "how much", "market", "rate"}
 
 MENU_TEXT = (
-    "👋 *CropEx* — Your Smart Market / Soko Lako\n"
+    "*CropEx* — Your Smart Market / Soko Lako\n"
     "━━━━━━━━━━━━━━\n"
-    "📊 *Check prices / Angalia bei:*\n"
+    "*Check prices / Angalia bei:*\n"
     "  'Price of maize' / 'Bei ya mahindi'\n\n"
-    "💰 *Sell crops / Uza mazao:*\n"
+    "*Sell crops / Uza mazao:*\n"
     "  'Sell 50 bags of maize' / 'Uza magunia 50 ya mahindi'\n\n"
-    "🛒 *Buy crops / Nunua mazao:*\n"
+    "*Buy crops / Nunua mazao:*\n"
     "  'Buy 10 bags of potatoes' / 'Nunua magunia 10 ya viazi'\n\n"
-    "🌾 *Supported crops / Mazao yanayoungwa mkono:*\n"
+    "*Supported crops / Mazao yanayoungwa mkono:*\n"
     "Maize/Mahindi • Tomatoes/Nyanya\n"
     "Potatoes/Viazi • Beans/Maharagwe\n"
     "Wheat/Ngano • Rice/Mchele\n"
     "━━━━━━━━━━━━━━\n"
-    "_Powered by CropEx Exchange_ 🌱"
+    "_Powered by CropEx Exchange_ "
 )
 
 # ─── Dataclass ───────────────────────────────────────────────────────────────
@@ -198,18 +196,18 @@ def build_response(p: ParsedIntent) -> dict:
 
     elif p.intent == Intent.PRICE_QUERY and not p.symbol:
         base["sms"] = (
-            "🌾 Which crop do you want prices for? / Unataka bei ya zao gani?\n"
+            "Which crop do you want prices for? / Unataka bei ya zao gani?\n"
             "E.g: 'Price of maize' or 'Bei ya mahindi'"
         )
 
     elif p.intent in (Intent.SELL_ORDER, Intent.BUY_ORDER) and not p.symbol:
         base["sms"] = (
-            "❓ Which crop? / Unauza au unanunua zao gani?\n"
+            "Which crop? / Unauza au unanunua zao gani?\n"
             "Try: 'Sell 50 bags of *maize*' or 'Uza magunia 50 ya *mahindi*'"
         )
 
     elif p.intent == Intent.UNKNOWN:
-        base["sms"] = f"❓ Sijui hiyo / I didn't understand.\n\n{MENU_TEXT}"
+        base["sms"] = f"Sijui hiyo / I didn't understand.\n\n{MENU_TEXT}"
 
     return base
 

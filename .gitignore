@@ -24,3 +24,6 @@ Thumbs.db
 # Environment variables
 .env
 *.pyc
+
+# Feedback database (created at runtime)
+price_api/data/

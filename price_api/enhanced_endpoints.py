@@ -119,30 +119,30 @@ def _decision_logic(
     if conf == "low":
         # Don't make strong sell/hold calls when the model is uncertain
         action, urgency = "monitor", "later"
-        reasons.append("⚠️ Model confidence is low — treat this as a rough guide")
+        reasons.append("Model confidence is low — treat this as a rough guide")
         if unreasonable:
-            reasons.append("⚠️ Predicted price is outside historical norms — verify locally")
+            reasons.append("Predicted price is outside historical norms — verify locally")
         if uncertainty_ratio > 0.35:
             reasons.append(
-                f"⚠️ Wide price range (KES {lower:.0f}–{upper:.0f}/kg) signals market volatility"
+                f"Wide price range (KES {lower:.0f}–{upper:.0f}/kg) signals market volatility"
             )
 
     elif trend == "rising":
         if trend_pct > 15:
             action, urgency = "hold", "soon"
-            reasons.append(f"📈 Strong price rise of {trend_pct:.1f}% expected — hold for now")
+            reasons.append(f"Strong price rise of {trend_pct:.1f}% expected — hold for now")
             reasons.append(f"Sell when prices peak near KES {upper:.0f}/kg")
         else:
             action, urgency = "hold", "monitor"
-            reasons.append(f"📈 Moderate rise of {trend_pct:.1f}% expected — no urgency to sell yet")
+            reasons.append(f"Moderate rise of {trend_pct:.1f}% expected — no urgency to sell yet")
 
     elif trend == "falling":
         if trend_pct < -15:
             action, urgency = "sell", "immediate"
-            reasons.append(f"📉 Sharp drop of {abs(trend_pct):.1f}% forecast — sell before prices fall further")
+            reasons.append(f"Sharp drop of {abs(trend_pct):.1f}% forecast — sell before prices fall further")
         elif trend_pct < -5:
             action, urgency = "sell", "soon"
-            reasons.append(f"📉 Prices expected to drop {abs(trend_pct):.1f}% — consider selling this week")
+            reasons.append(f"Prices expected to drop {abs(trend_pct):.1f}% — consider selling this week")
         else:
             action, urgency = "monitor", "later"
             reasons.append(f"Slight dip of {abs(trend_pct):.1f}% expected — monitor market daily")
@@ -189,7 +189,7 @@ Tell the farmer exactly what to do. Return ONLY the message."""
     farmer_msg = await _call_claude(prompt, max_tokens=120)
     if not farmer_msg:
         farmer_msg = (
-            f"📊 {req.commodity} @ {req.market}: KES {req.predicted_price:.0f}/kg forecast. "
+            f"{req.commodity} @ {req.market}: KES {req.predicted_price:.0f}/kg forecast. "
             f"Trend: {trend_pct:+.1f}%. Recommendation: *{action.upper()}*."
         )
 
