@@ -98,6 +98,63 @@ class LatestPrices:
                 "price_unit": best["unit"], "price_pricetype": best["pricetype"],
                 "price_note": f"Latest WFP observation ({best['pricetype']}, {best['date']}); not a forecast."}
 
+    def _rows(self, commodity: str, pricetype: str):
+        """All rows for a commodity and pricetype (pricetype compared case-insensitively)."""
+        pt = (pricetype or "").strip().lower()
+        for (_, c), rows in self._index.items():
+            if c == commodity:
+                for r in rows:
+                    if r["pricetype"].lower() == pt:
+                        yield r
+
+    def series_unit(self, market: str, commodity: str, pricetype: str) -> Optional[str]:
+        """WFP unit the prices of this series are quoted in (e.g. 'KG', '64 KG', 'Unit').
+
+        Uses this market's latest observation for the pricetype (any age: only the unit is read).
+        Otherwise the most common unit for the commodity and pricetype across markets, ties broken
+        alphabetically. None when there is no observation at all."""
+        pt = (pricetype or "").strip().lower()
+        own = [r for r in self._index.get((market, commodity), [])
+               if r["pricetype"].lower() == pt and r.get("unit")]
+        if own:
+            return max(own, key=lambda r: r["date"])["unit"]
+        counts: Dict[str, int] = {}
+        for r in self._rows(commodity, pricetype):
+            if r.get("unit"):
+                counts[r["unit"]] = counts.get(r["unit"], 0) + 1
+        if not counts:
+            return None
+        return min(counts, key=lambda u: (-counts[u], u))
+
+    def reference_range(self, commodity: str, pricetype: str, unit: str) -> Optional[Tuple[float, float, int]]:
+        """(min, max, n) of the latest observed price per market for this commodity, pricetype and
+        unit. Observations of any age are used. None when there are no matching observations."""
+        prices = [r["price"] for r in self._rows(commodity, pricetype) if r.get("unit") == unit]
+        if not prices:
+            return None
+        return min(prices), max(prices), len(prices)
+
+
+# A forecast is flagged when it is below min/PLAUSIBLE_FACTOR or above max*PLAUSIBLE_FACTOR of the
+# observed WFP prices for the same commodity, pricetype and unit. The factor is a tolerance choice,
+# not a measured value.
+PLAUSIBLE_FACTOR = 2.0
+
+
+def plausibility(pred: float, ref: Optional[Tuple[float, float, int]], unit: Optional[str]) -> Dict[str, object]:
+    """unreasonable flag, note and the plausible range for one forecast. Never flags without data."""
+    if ref is None or not unit:
+        return {"unreasonable": False, "plausible_min": None, "plausible_max": None,
+                "note": "Plausibility not checked: no WFP reference prices for this commodity, "
+                        "price type and unit."}
+    lo, hi, n = ref
+    p_min, p_max = round(lo / PLAUSIBLE_FACTOR, 2), round(hi * PLAUSIBLE_FACTOR, 2)
+    bad = not (p_min <= pred <= p_max)
+    note = (f"Outside the plausible range {p_min}-{p_max} per {unit} "
+            f"(observed WFP prices {lo}-{hi} across {n} markets)." if bad
+            else "Prediction within normal range.")
+    return {"unreasonable": bad, "plausible_min": p_min, "plausible_max": p_max, "note": note}
+
 
 def parse_latest_prices(obj) -> Tuple[Optional[LatestPrices], Optional[str]]:
     """Validate a decoded latest_prices.json. Bad individual rows are skipped and counted."""

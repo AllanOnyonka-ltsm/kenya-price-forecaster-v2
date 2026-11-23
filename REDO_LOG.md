@@ -109,3 +109,7 @@ Status at stop: swarm_trading 3 of 30 typed files and 3 of 3 copies done. Remain
 - NOT MATCH, must be redone: ui\cloud\functions\marketplace\notifications.ts. The first full typing went wrong in the middle (lines 76, 94-97, 116-117, 144, 161, 188, 191): some chunks were typed at the wrong spot, because ctrl+End and Type were issued in one batch. The on-disk file is still the broken version. The VS Code tab was then cleared with Ctrl+A/Delete and retyping started; it is unsaved and incomplete (lines 1-60 and 61-75 done, then lines 76-105 retyped; stopped at the onOrderStatusChange chunk).
 - Stop reason: the active window changed to Brave (Hackatime dashboard/leaderboards pages) during typing, and WaitFor failed twice. Rule: stop. The text typed at that point may have landed in the browser; it was not checked. No other app was used.
 - Next file to do: ui\cloud\functions\marketplace\notifications.ts (redo from scratch; Ctrl+A/Delete in its tab, then type in 15-line chunks with ctrl+End and Type in separate batches, then Ctrl+S, then check). Remaining after it: index.ts, parseExcel.ts, payments.ts, seedData.ts, syncMarketPrices.ts (marketplace functions), then ui\ rest (about 190 files).
+
+## Direct fix, not typed (2026-11-23)
+
+Claude edited price_api/app.py, price_api/latest_prices.py, price_api/API_ENDPOINTS.md and SCHEMAS.md directly, and added price_api/test_price_plausibility_unit.py, to fix the /predict unit label and the "unreasonable" check (CROP_THRESHOLDS held WFP pack sizes, not prices). Guard manifest re-initialised afterwards.

@@ -51,7 +51,7 @@ Optional price-history fields (`price_3_months_ago`, `price_6_months_ago`, `pric
   "market": "Wakulima (Nairobi)",
   "date": "2025-12-05",
   "prediction_per_kg": 58.2,
-  "unit": "kg",
+  "unit": "KG",
   "market_type": "retail",
   "previous_month_price": 58.2,
   "confidence_pct": 76,
@@ -66,11 +66,12 @@ Optional price-history fields (`price_3_months_ago`, `price_6_months_ago`, `pric
 ```
 
 **Field notes:**
-- `prediction_per_kg`: the champion forecast (KES/kg).
+- `prediction_per_kg`: the champion forecast. Despite the legacy name it is in `unit`, the WFP unit of the series (for example `"64 KG"` for wholesale tomatoes, `"KG"` for retail potatoes), the same unit as `previous_month_price`. `unit` is read from `artifacts/latest_prices.json`; it is `"unknown (...)"` when that file has no matching series.
+- `price_per_kg` (optional): the forecast divided by the pack weight when `unit` is `KG` or `<n> KG`; `null` for units without a fixed weight (`Head`, `Unit`, `Bunch`).
 - `lower_bound` / `upper_bound`: `prediction * ratio_p10` and `prediction * ratio_p90` for the crop's band in `champion.json` (`error_bands`). If the crop has no band, the `_ALL` band is used. If `champion.json` fails to load, a built-in default band of 0.75 to 1.35 is used.
 - `confidence_pct`: an integer computed from the relative width of the band, `round(100 * (1 - (upper - lower) / (2 * prediction)))`, clamped to 0 to 100 (`predictor.py`, `confidence_from_band`). It describes band width, not a statistical probability.
 - `error_margin`: `"+-"` followed by the larger of `upper - prediction` and `prediction - lower`, rounded to 2 decimals.
-- `unreasonable`: true when `prediction_per_kg` is above a fixed per-crop threshold in `app.py` (`CROP_THRESHOLDS`, for example 64 for tomatoes). The `note` then explains the threshold.
+- `unreasonable`: true when the forecast is outside `plausible_min`–`plausible_max`: half the lowest to twice the highest latest WFP price observed across markets for the same commodity, price type and unit (`latest_prices.plausibility`, `PLAUSIBLE_FACTOR` 2.0, a tolerance choice). The `note` then gives the range. With no reference prices it is `false` and the note says the check was not run. (The old fixed `CROP_THRESHOLDS` compared KES prices with WFP pack sizes in kg and was removed.)
 - `model_used`: `"naive_last"` for the current champion, or `"random_forest"` if the champion were a Random Forest and it loaded.
 - `fallback_reason`: `null` normally. If the configured Random Forest fails at runtime, the naive forecast is returned and this field says why.
 

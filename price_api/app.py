@@ -18,7 +18,7 @@ from enhanced_endpoints import (
 from intent_router import parse_intent, build_response
 from feature_importance import group_feature_importances, impact_label
 from geo import apply_coord_overrides, markets_within_radius
-from latest_prices import load_latest_prices
+from latest_prices import load_latest_prices, plausibility, price_per_kg
 import feedback_store
 from predictor import load_champion, Predictor, confidence_from_band
 import threading
@@ -112,17 +112,10 @@ PREDICTOR = Predictor(CHAMPION, model_loader=_load_rf_predictor)
 # =========================
 # BUSINESS RULES (LOCKED)
 # =========================
-CROP_THRESHOLDS = {
-    "cabbage":  126,
-    "kale":      50,
-    "onion":     13,
-    "onions":    13,
-    "potatoes":  50,
-    "tomatoes":  64,
-    "bananas":   50,
-}
-
-ALLOWED_COMMODITIES = set(CROP_THRESHOLDS.keys())
+# The old CROP_THRESHOLDS dict compared prices (KES) with numbers that were really WFP pack sizes in
+# kg (64 for a tomato crate, 126 for a cabbage bag). /predict now checks plausibility against
+# observed WFP prices instead (latest_prices.plausibility).
+ALLOWED_COMMODITIES = {"cabbage", "kale", "onion", "onions", "potatoes", "tomatoes", "bananas"}
 DEFAULT_MICRO_MARKET_RADIUS_KM = 50.0
 
 # =========================
@@ -238,6 +231,12 @@ class PredictResponse(BaseModel):
     fallback_reason:      Optional[str] = None   # None, or why the champion model was not used
     # Added (optional, additive): which error band was used, e.g. "Tomatoes/Wholesale", "Tomatoes", "_ALL"
     band_source:          Optional[str] = None
+    # Added (optional, additive). prediction_per_kg keeps its legacy name but is in `unit`, the WFP
+    # unit of the series (e.g. "64 KG" for wholesale tomatoes). price_per_kg is the per-kg value
+    # when the unit has a fixed weight, else None. plausible_* is the range used for `unreasonable`.
+    price_per_kg:         Optional[float] = None
+    plausible_min:        Optional[float] = None
+    plausible_max:        Optional[float] = None
 
 class RecommendationRequest(BaseModel):
     commodity:       str
@@ -620,27 +619,38 @@ def _forecast(req, canonical: str) -> dict:
         "band_source":     out["band_source"],
     }
 
+def unit_and_plausibility(market: str, canonical: str, pricetype: str, pred: float):
+    """(unit, plausibility dict) for one forecast, from artifacts/latest_prices.json.
+    Used by /predict and by demo/build_demo_data.py, so both give the same answer."""
+    unit, ref = None, None
+    if LATEST_PRICES is not None:
+        unit = LATEST_PRICES.series_unit(market, canonical, pricetype)
+        if unit:
+            ref = LATEST_PRICES.reference_range(canonical, pricetype, unit)
+    return unit, plausibility(pred, ref, unit)
+
 @app.post("/predict", response_model=PredictResponse)
 def predict(req: PredictRequest):
     norm = req.commodity.strip().lower()
     _check_inputs(req)
-    fc = _forecast(req, COMMODITY_META[norm][0])
+    canonical = COMMODITY_META[norm][0]
+    fc = _forecast(req, canonical)
 
     pred         = fc["predicted"]
     lo, hi       = fc["lower"], fc["upper"]
-    threshold    = CROP_THRESHOLDS.get(norm, pred * 1.5)
-    unreasonable = pred > threshold
-    note = fc["conf_note"] or (
-        "Prediction within normal range." if not unreasonable
-        else f"Unreasonable: exceeds threshold of {threshold}/kg."
-    )
+    unit, check  = unit_and_plausibility(req.market, canonical, req.pricetype, pred)
+    unreasonable = check["unreasonable"]
+    note = check["note"] if unreasonable else (fc["conf_note"] or check["note"])
 
     return {
         "commodity":            req.commodity,
         "market":               req.market,
         "date":                 req.date,
         "prediction_per_kg":    round(pred, 2),
-        "unit":                 "kg",
+        "unit":                 unit or "unknown (same unit as previous_month_price)",
+        "price_per_kg":         price_per_kg(pred, unit) if unit else None,
+        "plausible_min":        check["plausible_min"],
+        "plausible_max":        check["plausible_max"],
         "market_type":          req.pricetype,
         "previous_month_price": req.previous_month_price,
         "confidence_pct":       fc["confidence"],

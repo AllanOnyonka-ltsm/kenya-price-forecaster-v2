@@ -151,7 +151,7 @@ If intent → Pass to C++ engine
 
 ### Response
 
-The values below are computed from `champion.json` for Tomatoes at `previous_month_price` 58.2 (naive forecast; band ratios p10 0.758, p90 1.2465; unreasonable threshold 64 for tomatoes).
+The values below are computed from `champion.json` for Tomatoes at `previous_month_price` 58.2 (naive forecast; band ratios p10 0.758, p90 1.2465). `unit` assumes `latest_prices.json` lists this series in `KG`; the `price_per_kg` and `plausible_*` fields also depend on that file and are omitted here.
 
 ```json
 {
@@ -159,7 +159,7 @@ The values below are computed from `champion.json` for Tomatoes at `previous_mon
   "market": "Wakulima (Nairobi)",
   "date": "2025-12-05",
   "prediction_per_kg": 58.2,
-  "unit": "kg",
+  "unit": "KG",
   "market_type": "retail",
   "previous_month_price": 58.2,
   "confidence_pct": 76,
@@ -175,11 +175,14 @@ The values below are computed from `champion.json` for Tomatoes at `previous_mon
 
 | Field | Type | Notes |
 |-------|------|-------|
-| `prediction_per_kg` | float | Forecast price (KES/kg). With the current champion, equals `previous_month_price` |
+| `prediction_per_kg` | float | Forecast price in `unit` (legacy name; same unit as `previous_month_price`). With the current champion, equals `previous_month_price` |
+| `unit` | string | WFP unit of the series, e.g. `KG`, `64 KG`, `Head`; `unknown (...)` when not in `latest_prices.json` |
+| `price_per_kg` | float or null | Forecast per kg when `unit` has a fixed weight, else null |
+| `plausible_min` / `plausible_max` | float or null | Range used for `unreasonable`; null when no reference prices exist |
 | `confidence_pct` | int | 0–100. Computed from the relative width of the band, not a probability |
 | `lower_bound` | float | `prediction_per_kg × ratio_p10` for the crop in `champion.json` |
 | `upper_bound` | float | `prediction_per_kg × ratio_p90` for the crop. The bounds form an 80% range from the backtest |
-| `unreasonable` | bool | `true` when the prediction is above a fixed per-crop threshold in `app.py` (`CROP_THRESHOLDS`) |
+| `unreasonable` | bool | `true` when the forecast is outside half the lowest to twice the highest observed WFP price for the same commodity, price type and unit; `false` when there is no reference data |
 | `error_margin` | string | `"+-X.XX"` KES: the larger distance from the prediction to either bound |
 | `model_used` | string | `naive_last` (current champion) or `random_forest` |
 | `fallback_reason` | string or null | Set only if a configured Random Forest failed and the naive forecast was used |
