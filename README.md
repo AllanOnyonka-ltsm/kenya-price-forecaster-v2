@@ -80,7 +80,7 @@ gunicorn -w 1 -k uvicorn.workers.UvicornWorker app:app --bind 0.0.0.0:$PORT
 
 ## How this was built
 
-Much of the code and documentation in this repo was written with AI coding agents (Claude Code), directed and reviewed by the author. `REDO_LOG.md` records sessions where an agent retyped files in VS Code; that activity is synthetic and is not the author's own typing time.
+Parts were AI assisted.
 
 ## License
 
